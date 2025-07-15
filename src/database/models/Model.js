@@ -10,7 +10,8 @@ export default (sequelize, dataTypes) => {
             allowNull: false,
         },
         brand_id: { type: dataTypes.INTEGER},
-        name: { type: dataTypes.STRING(255)}
+        name: { type: dataTypes.STRING(255)},
+        color: { type: dataTypes.STRING(255)}
     }
 
     let config = {

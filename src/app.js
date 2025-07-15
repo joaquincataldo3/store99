@@ -6,8 +6,8 @@ import "dotenv/config.js"; // En ESM se importa asi
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
-
 import memorystore from "memorystore";
+import viewsRouter from './routes/views/views.routes.js';
 const MemoryStore = memorystore(session);
 
 // way to replace __dirname in es modules
@@ -15,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.set("view engine", "ejs");
-app.set("views", path.resolve(__dirname, "./views"));
+app.set("views", path.resolve(__dirname, "./pages"));
 app.use(express.static("./public"));
 
 // Para capturar el body
@@ -47,12 +47,14 @@ app.use(cookieParser());
 // Mehtod-override --> Para usar put y delete (?_method=...)
 app.use(methodOverride("_method"));
 
+app.use('/', viewsRouter)
+
 const PORT = process.env.PORT || 3500;
 
 //404
 app.use((req, res, next) => {
   res.status(404);
-  return res.redirect("/");
+  return res.redirect("/not-found");
 });
 
 app.listen(PORT, () => {

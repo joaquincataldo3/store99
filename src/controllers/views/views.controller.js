@@ -1,4 +1,4 @@
-export default controller = {
+const controller = {
     signIn: (req, res) => {
         return res.render('sign-in');
     },
@@ -6,3 +6,5 @@ export default controller = {
         return res.render('register');
     }
 }
+
+export default controller;

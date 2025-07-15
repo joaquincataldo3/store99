@@ -1,0 +1,72 @@
+.form-container {
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-container h1 {
+  font-size: 28px;
+  color: #1a1a1a;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* Formulario */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.label-input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.form-input {
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #ccd6e0;
+  border-radius: 6px;
+  background-color: #f8fbff;
+  transition: border 0.2s;
+}
+
+.form-input:focus {
+  border-color: #0077ff;
+  outline: none;
+}
+
+/* Botón */
+button[type="submit"] {
+  background-color: #0077ff;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: #005fd1;
+}
+
+.user-form-main {
+    display: flex;
+    width: 100%;
+    height: 80vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
