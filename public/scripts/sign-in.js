@@ -4,7 +4,7 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 const checkForRegisterSubmit = () => {
-    const form = document.getElementById('register-form');
+    const form = document.getElementById('sign-in-form');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         validateFormDataAndFetch(form);
@@ -25,10 +25,16 @@ const validateFormDataAndFetch = async (form) => {
         }
     })
     if(!isValidForm) return;
-    const response = await fetch('/api/register', {
+    const response = await fetch('/api/sign-in', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(fetchData)
     })
-    console.log(response)
+    const jsonResponse = await response.json();
+    const {ok, msg} = jsonResponse;
+    if(!ok){
+        const errorMsgElement = document.querySelector('.error-msg');
+        errorMsgElement.innerText = msg;
+        return;
+    }
 }

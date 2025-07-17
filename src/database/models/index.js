@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import configData from '../config/config.js';
+import configData from '../config.js';
 import { fileURLToPath, pathToFileURL } from 'url';
 
 const env = process.env.NODE_ENV || 'development';

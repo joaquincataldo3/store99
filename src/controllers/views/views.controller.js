@@ -4,6 +4,9 @@ const controller = {
     },
     register: (req, res) => {
         return res.render('register');
+    },
+    createModel: (req, res) => {
+        return res.render('create-model')
     }
 }
 

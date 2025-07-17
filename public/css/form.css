@@ -70,3 +70,11 @@ button[type="submit"]:hover {
     align-items: center;
     justify-content: center;
 }
+
+.input-error {
+  border: 1px solid red!important;
+}
+
+.error-msg {
+  color: red;
+}

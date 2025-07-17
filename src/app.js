@@ -2,12 +2,14 @@ import express from "express";
 const app = express();
 import path from "path";
 import { fileURLToPath } from "url";
-import "dotenv/config.js"; // En ESM se importa asi
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
 import memorystore from "memorystore";
 import viewsRouter from './routes/views/views.routes.js';
+import usersRouter from './routes/api/users.routes.js';
+import dotenv from "dotenv";
+dotenv.config();
 const MemoryStore = memorystore(session);
 
 // way to replace __dirname in es modules
@@ -48,13 +50,13 @@ app.use(cookieParser());
 app.use(methodOverride("_method"));
 
 app.use('/', viewsRouter)
+app.use('/api', usersRouter)
 
 const PORT = process.env.PORT || 3500;
 
 //404
 app.use((req, res, next) => {
-  res.status(404);
-  return res.redirect("/not-found");
+  return res.status(404).render('not-found');
 });
 
 app.listen(PORT, () => {

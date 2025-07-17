@@ -1,7 +1,11 @@
-import { findByEmail, insertInDb } from "../../helpers/user";
+import { getMappedErrors } from "../../helpers/errors.js";
+import { findByEmail, insertInDb } from "../../helpers/user.js";
+import { validationResult } from 'express-validator';
+import jwt from 'jsonwebtoken'
+import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
 
-export default controller = {
+const controller = {
     register: async (req, res) => {
         try {
             let errors = validationResult(req);
@@ -20,14 +24,14 @@ export default controller = {
             const userExists = await findByEmail(email);
 
             if(userExists === undefined){
-                return res.status(500)({
+                return res.status(500).json({
                     ok: false,
                     msg: 'internal server error'
                 })
             }
 
-            if(userExists === null){
-                return res.status(409)({
+            if(userExists){
+                return res.status(409).json({
                     ok: false,
                     msg: 'user already exists'
                 })
@@ -94,6 +98,8 @@ export default controller = {
             const user = userExists;
 
             const isValidPassword = bcrypt.compareSync(password, user.password);
+            console.log(isValidPassword)
+            console.log(user.password)
 
             if(!isValidPassword) {
                 return res.status(400).json({
@@ -104,8 +110,10 @@ export default controller = {
 
             let cookieTime = 1000 * 60 * 60 * 24 * 7; 
             
+            const webTokenSecret = process.env.JSONWEBTOKEN_SECRET;
+
             req.session.userLoggedId = user.id;
-            const token = jwt.sign({ id: userToLog.id }, webTokenSecret, {
+            const token = jwt.sign({ id: user.id }, webTokenSecret, {
                 expiresIn: "7d",
             }); 
             res.cookie("userAccessToken", token, {
@@ -131,3 +139,5 @@ export default controller = {
         
     }
 }
+
+export default controller;

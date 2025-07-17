@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include ('partials/head') %>
+    <link rel="stylesheet" href="/css/form.css">
+    <script type="module" src="/scripts/sign-in.js"></script>
+</head>
+
+<body>
+
+    <main class="user-form-main">
+        <div class="form-container">
+            <h1>Crear modelo</h1>
+            <form class="form" id="create-model-form" method="POST">
+                <p class="error-msg"></p>
+                <div class="label-input-container">
+                    <label class="form-label" for="brand">Marca</label>
+                    <input class="form-input" name="brand" type="text">
+                </div>
+
+                <div class="label-input-container">
+                    <label  class="form-label">Modelo</label>
+                    <input class="form-input" name="model" type="text" >
+                </div>
+                
+                <div class="label-input-container">
+                    <label  class="form-label">Color</label>
+                    <input class="form-input" name="color" type="text" >
+                </div>
+
+                <div class="label-input-container">
+                    <label  class="form-label">Imagenes</label>
+                    <input class="form-input" name="images" type="file" >
+                </div>
+
+                <button type="submit">Enviar</button>
+
+            </form>
+        </div>
+    </main>
+   
+</body>
+</html>

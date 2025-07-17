@@ -1,4 +1,4 @@
-import db from "../../database/models/index.js";
+import db from "../database/models/index.js";
 const { User } = db;
 
 export const findByEmail = async (email) => {
@@ -18,7 +18,7 @@ export const findByEmail = async (email) => {
 export const insertInDb = async (userToCreate) => {
   try {
     if(!userToCreate)return null;
-    const createdUser = await db.User.create(obj);
+    const createdUser = await db.User.create(userToCreate);
     return createdUser
   } catch (error) {
     console.log(`error inserting user in db`);
