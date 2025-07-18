@@ -1,0 +1,116 @@
+/* Contenedor principal */
+.form-container {
+  background: white;
+  padding: 30px;
+  max-width: 650px;
+  margin: 40px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Espaciado entre elementos */
+.form-group {
+  margin-bottom: 25px;
+}
+
+/* Etiquetas */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* Inputs y selects */
+input[type="text"],
+select,
+input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Mensaje pequeño debajo de inputs */
+small {
+  display: block;
+  margin-top: 5px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* Botón */
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Spinner */
+.brand-loader-container {
+  position: relative;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Vista previa de imágenes */
+#preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.preview-image-wrapper {
+  position: relative;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.preview-image-wrapper img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.preview-image-wrapper input[type="radio"] {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  transform: scale(1.5);
+  z-index: 2;
+}
+
+.preview-image-wrapper.selected {
+  border-color: #007bff;
+}

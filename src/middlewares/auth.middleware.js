@@ -1,17 +1,16 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config()
 
 export const checkUserAuth = (req, res, next) => {
   try {
     
-    if (req.session?.userLoggedId) {
-      return next();
-    }
     const token = req.cookies?.userAccessToken;
     if (!token) {
       return res.status(401).json({ ok: false, msg: 'Unauthorized' });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); 
+    const decoded = jwt.verify(token, process.env.JSONWEBTOKEN_SECRET); 
     req.user = decoded;
     return next();
     

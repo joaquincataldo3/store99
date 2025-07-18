@@ -1,19 +1,63 @@
-import { deleteFilesFromDbByShoeId, filterFiles, getFilesFromDbByShoeId, handleModelFiles, insertFilesInDb } from "../../helpers/file";
-import { deleteModelById, findModelById, findModelByNameAndColor, insertModelInDb } from "../../helpers/model";
-import { findBrandById } from "../../helpers/brand";
-import { deleteFilesFromS3 } from "../../helpers/aws";
+import { deleteFilesFromDbByShoeId, filterFiles, getFilesFromDbByShoeId, handleModelFiles, insertFilesInDb } from "../../helpers/file.js";
+import { deleteModelById, findAllModels, findModelById, findModelByNameAndColor, insertModelInDb } from "../../helpers/model.js";
+import { findBrandById } from "../../helpers/brand.js";
+import { deleteFilesFromS3, getS3PublicUrl} from "../../helpers/aws.js";
 
-export default controller = {
+const controller = {
+    getAll: async (req, res) => {
+        try {
+            const models = await findAllModels();
+
+            const enrichedModels = await Promise.all(models.map(async model => {
+            const filesFromDb = await getFilesFromDbByShoeId(model.id);
+
+            const filesWithUrls = await Promise.all(
+                filesFromDb.map(async file => {
+                    console.log(file.regular_filename)
+                    console.log(file.thumb_filename)
+                const regularUrl = await getS3PublicUrl(file.filename || file.regular_filename);
+                const thumbUrl = file.main_file && file.thumb_filename
+                    ? await getS3PublicUrl(file.thumb_filename)
+                    : null;
+
+                return {
+                    key: regularUrl,
+                    thumb: thumbUrl
+                };
+                })
+            );
+
+            return {
+                ...model.dataValues, // si estás usando Sequelize
+                files: filesWithUrls
+            };
+            }));
+
+            return res.status(200).json({
+            ok: true,
+            msg: 'successfully retrieved all models',
+            data: enrichedModels
+            });
+        } catch (error) {
+            console.log('error obtaining all models');
+            console.log(error);
+            return res.status(500).json({
+            msg: 'error obtaining all models',
+            ok: false
+            });
+        }
+    },
     create: async (req, res) => {
         try {
-            let {name, color, brandId} = req.body;
-
+            let {name, color, brandId, filesMetadata} = req.body;
+            filesMetadata = JSON.parse(filesMetadata);
             name = name.toLowerCase();
             color = color.toLowerCase();
 
-            const files = req.files;
-            const areInvalidFiles = filterFiles(files);
-            if(!areInvalidFiles){
+            const multerFiles = req.files;
+            const areInvalidFiles = filterFiles(multerFiles);
+
+            if(areInvalidFiles){
                 return res.status(400).json({
                     msg: 'invalid extension files',
                     ok: false
@@ -53,14 +97,14 @@ export default controller = {
                 })
             }
             
-            const fileKeys = await handleModelFiles(files);
+            const fileKeys = await handleModelFiles(multerFiles, filesMetadata);
             if(fileKeys === undefined){
                 return res.status(500).json({
                     msg: 'internal server error',
                     ok: false
                 })
             }
-            const areFilesInsertedInDb = await insertFilesInDb(fileKeys)
+            const areFilesInsertedInDb = await insertFilesInDb(fileKeys, modelInserted.id)
             if(!areFilesInsertedInDb){
                 return res.status(500).json({
                     msg: 'internal server error',
@@ -84,13 +128,14 @@ export default controller = {
     delete: async (req, res) => {
         try {
             const {shoeId} = req.params;
-            if(!shoeId || Number(shoeId)){
-                return res.json({
-                    msg: 'invalid shoe id',
-                    ok: false,
-                })
+            if (!shoeId || isNaN(Number(shoeId))) {
+                return res.status(400).json({
+                    msg: 'Invalid shoe id',
+                    ok: false
+                });
             }
             const shoeExists = await findModelById(shoeId);
+            console.log(shoeExists)
             if(shoeExists === undefined){
                 return res.status(500).json({
                     ok: false,
@@ -140,3 +185,5 @@ export default controller = {
         
     }
 }
+
+export default controller;

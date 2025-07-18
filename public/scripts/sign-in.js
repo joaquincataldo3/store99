@@ -1,5 +1,4 @@
 window.addEventListener('DOMContentLoaded', () => {
-  
     checkForRegisterSubmit();
 })
 
@@ -25,7 +24,7 @@ const validateFormDataAndFetch = async (form) => {
         }
     })
     if(!isValidForm) return;
-    const response = await fetch('/api/sign-in', {
+    const response = await fetch('/api/user/sign-in', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(fetchData)

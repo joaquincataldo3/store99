@@ -6,5 +6,7 @@ const router = express.Router();
 router.get('/inicio-sesion', viewsController.signIn);
 router.get('/registro', viewsController.register);
 router.get('/crear-modelo', checkUserAuth, viewsController.createModel);
+router.get('/zapatillas-encargue', viewsController.modelsList);
+router.get('/modelo/:shoeId', viewsController.modelDetail);
 
 export default router;

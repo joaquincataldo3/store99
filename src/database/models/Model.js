@@ -15,7 +15,7 @@ export default (sequelize, dataTypes) => {
     }
 
     let config = {
-        tableName: 'model',
+        tableName: 'models',
         paranoid: false,
         timestamps: false,
     }

@@ -18,11 +18,12 @@ const controller = {
                     params: errorsParams,
                 });
             }
-            const { username, email, password } = req.body;
+            const { email, password } = req.body;
             const sanitizedEmail = email.toLowerCase();
 
-            const userExists = await findByEmail(email);
-
+            const userExists = await findByEmail(sanitizedEmail);
+            console.log('user')
+            console.log(userExists)
             if(userExists === undefined){
                 return res.status(500).json({
                     ok: false,
@@ -79,8 +80,10 @@ const controller = {
                 })
             }
 
-            const userExists = await findByEmail(email);
-
+            const sanitizedEmail = email.toLowerCase();
+            const userExists = await findByEmail(sanitizedEmail);
+            console.log('user exists')
+            console.log(userExists)
             if(userExists === undefined){
                 return res.status(500).json({
                     ok: false,
@@ -98,9 +101,6 @@ const controller = {
             const user = userExists;
 
             const isValidPassword = bcrypt.compareSync(password, user.password);
-            console.log(isValidPassword)
-            console.log(user.password)
-
             if(!isValidPassword) {
                 return res.status(400).json({
                     ok: false,
@@ -122,7 +122,6 @@ const controller = {
                 secure: process.env.NODE_ENV == "production",
                 sameSite: "strict",
             });
-
             return res.status(200).json({
                 ok: true,
                 msg: 'successfully signed in'

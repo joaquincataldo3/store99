@@ -9,7 +9,8 @@ export default (sequelize, dataTypes) => {
             autoIncrement: true,
             allowNull: false,
         },
-        filename: { type: dataTypes.STRING(255)},
+        regular_filename: { type: dataTypes.STRING(255)},
+        thumb_filename: { type: dataTypes.STRING(255)},
         model_id: { type: dataTypes.INTEGER },
         main_file: { type: dataTypes.INTEGER }
     }

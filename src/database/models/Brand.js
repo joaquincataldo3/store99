@@ -22,7 +22,7 @@ export default (sequelize, dataTypes) => {
 
     Brand.associate = (models) => {
         const {Model} = models;
-        Brand.belongsTo(Model, {
+        Brand.hasMany(Model, {
             as: 'models',
             foreignKey: 'brand_id'
         })

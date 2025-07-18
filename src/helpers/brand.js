@@ -1,4 +1,4 @@
-import db from "../../database/models/index.js";
+import db from "../database/models/index.js";
 const { Brand } = db;
 
 export const findBrandById = async (id) => {
@@ -10,4 +10,8 @@ export const findBrandById = async (id) => {
         console.log(error);
         return null;
     }
+}
+
+export const getAllBrands = async () => {
+    return await Brand.findAll();
 }

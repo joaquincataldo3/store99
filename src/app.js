@@ -8,6 +8,8 @@ import methodOverride from "method-override";
 import memorystore from "memorystore";
 import viewsRouter from './routes/views/views.routes.js';
 import usersRouter from './routes/api/users.routes.js';
+import brandsRouter from './routes/api/brands.routes.js';
+import modelsRouter from './routes/api/models.routes.js';
 import dotenv from "dotenv";
 dotenv.config();
 const MemoryStore = memorystore(session);
@@ -50,7 +52,9 @@ app.use(cookieParser());
 app.use(methodOverride("_method"));
 
 app.use('/', viewsRouter)
-app.use('/api', usersRouter)
+app.use('/api/user', usersRouter)
+app.use('/api/brand', brandsRouter)
+app.use('/api/model', modelsRouter)
 
 const PORT = process.env.PORT || 3500;
 
