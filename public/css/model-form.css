@@ -18,6 +18,7 @@ label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
+  font-size: 18px;
 }
 
 /* Inputs y selects */
@@ -26,7 +27,7 @@ select,
 input[type="file"] {
   width: 100%;
   padding: 12px;
-  font-size: 1rem;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
@@ -113,4 +114,33 @@ small {
 
 .preview-image-wrapper.selected {
   border-color: #007bff;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 18px;
+  background: #f1f5ff;
+  border: 1px solid #ccd6e0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  accent-color: #0077ff;
+  cursor: pointer;
+}
+
+.loading-msg {
+  font-size: 13px;
+  color: #888;
 }

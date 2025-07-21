@@ -10,6 +10,8 @@ import viewsRouter from './routes/views/views.routes.js';
 import usersRouter from './routes/api/users.routes.js';
 import brandsRouter from './routes/api/brands.routes.js';
 import modelsRouter from './routes/api/models.routes.js';
+import sizesRouter from './routes/api/sizes.routes.js';
+import categoriesController from './routes/api/categories.routes.js';
 import dotenv from "dotenv";
 dotenv.config();
 const MemoryStore = memorystore(session);
@@ -55,6 +57,8 @@ app.use('/', viewsRouter)
 app.use('/api/user', usersRouter)
 app.use('/api/brand', brandsRouter)
 app.use('/api/model', modelsRouter)
+app.use('/api/size', sizesRouter)
+app.use('/api/category', categoriesController)
 
 const PORT = process.env.PORT || 3500;
 

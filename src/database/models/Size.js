@@ -13,7 +13,7 @@ export default (sequelize, dataTypes) => {
             type: dataTypes.DECIMAL(5,1),
             allowNull: false
         },
-        usa_size: {
+        us_size: {
             type: dataTypes.DECIMAL(5,1),
             allowNull: false
         },

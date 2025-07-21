@@ -23,11 +23,18 @@ export default (sequelize, dataTypes) => {
     const Model = sequelize.define(alias, cols, config);
 
     Model.associate = (models) => {
-        const {Brand, File, Stock, Size} = models;
+        const {Brand, File, Stock, Size, Category} = models;
         Model.belongsTo(Brand, {
             as: 'brand',
             foreignKey: 'brand_id'
         })
+        Model.belongsToMany(Category, {
+            through: 'model_category',
+            foreignKey: 'model_id',
+            otherKey: 'category_id',
+            as: 'categories'
+        });
+
         Model.hasMany(File, {
             as: 'files',
             foreignKey: 'model_id'

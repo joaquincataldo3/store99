@@ -44,12 +44,13 @@ export const findModelById = async (shoeId) => {
 
 export const insertModelInDb = async (modelToInsert) => {
     try {
-        const {name, color, brandId} = modelToInsert;
+        const {name, color, brandId, categoryId} = modelToInsert;
         
         const newModel = await Model.create({
             name,
             color,
-            brand_id: brandId
+            brand_id: brandId,
+            category_id: categoryId
         })
         return newModel;
     } catch (error) {

@@ -96,6 +96,13 @@ document.addEventListener('DOMContentLoaded', () => {
     hasErrors = true;
   }
 
+  const selectedCategories = [...document.querySelectorAll('input[name="categories"]:checked')];
+
+    if (selectedCategories.length === 0) {
+      alert('Debés seleccionar al menos una categoría.');
+      hasErrors = true;
+    }
+
   if (files.length === 0) {
     alert('Debés subir al menos una imagen.');
     hasErrors = true;
@@ -133,6 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
   formData.append('name', name);
   formData.append('color', color);
   formData.append('filesMetadata', JSON.stringify(uploadedFiles));
+  selectedCategories.forEach(cb => {
+    formData.append('categories[]', cb.value);
+  });
 
   // Agregar archivos al FormData
   for (let i = 0; i < files.length; i++) {
@@ -157,4 +167,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
     
   });
+
+  const categoriesContainer = document.getElementById('categories-container');
+
+    // Cargar categorías desde la API
+    async function loadCategories() {
+      try {
+        const res = await fetch('/api/category');
+        const { data } = await res.json();
+        categoriesContainer.innerHTML = '';
+
+        data.forEach(category => {
+          const label = document.createElement('label');
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.name = 'categories';
+          checkbox.value = category.id;
+          label.appendChild(checkbox);
+          label.appendChild(document.createTextNode(category.name));
+          categoriesContainer.appendChild(label);
+        });
+
+      } catch (err) {
+        categoriesContainer.innerHTML = '<p class="error-msg">Error al cargar categorías.</p>';
+        console.error('Error cargando categorías:', err);
+      }
+    }
+
+  loadCategories();
 });

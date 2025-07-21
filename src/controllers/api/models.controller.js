@@ -2,6 +2,7 @@ import { deleteFilesFromDbByShoeId, filterFiles, getFilesFromDbByShoeId, handleM
 import { deleteModelById, findAllModels, findModelById, findModelByNameAndColor, insertModelInDb } from "../../helpers/model.js";
 import { findBrandById } from "../../helpers/brand.js";
 import { deleteFilesFromS3, getS3PublicUrl} from "../../helpers/aws.js";
+import { insertCategoriesWithModelId } from "../../helpers/category.js";
 
 const controller = {
     getAll: async (req, res) => {
@@ -13,8 +14,6 @@ const controller = {
 
             const filesWithUrls = await Promise.all(
                 filesFromDb.map(async file => {
-                    console.log(file.regular_filename)
-                    console.log(file.thumb_filename)
                 const regularUrl = await getS3PublicUrl(file.filename || file.regular_filename);
                 const thumbUrl = file.main_file && file.thumb_filename
                     ? await getS3PublicUrl(file.thumb_filename)
@@ -49,7 +48,7 @@ const controller = {
     },
     create: async (req, res) => {
         try {
-            let {name, color, brandId, filesMetadata} = req.body;
+            let {name, color, brandId, filesMetadata, categoryId, categories} = req.body;
             filesMetadata = JSON.parse(filesMetadata);
             name = name.toLowerCase();
             color = color.toLowerCase();
@@ -87,11 +86,21 @@ const controller = {
             const newModelToCreate = {
                 name,
                 color,
-                brandId
+                brandId,
+                categoryId
             }
             const modelInserted = await insertModelInDb(newModelToCreate);
             if(!modelInserted){
                 return res.status(500).json({
+                    msg: 'internal server error',
+                    ok: false
+                })
+            }
+            const categoryIds = Array.isArray(categories) ? categories : [categories];
+            const modelCategorySuccessfullyInserted = await insertCategoriesWithModelId(categoryIds, modelInserted.id);
+            if(!modelCategorySuccessfullyInserted) {
+                await deleteModelById(modelInserted.id);
+                 return res.status(500).json({
                     msg: 'internal server error',
                     ok: false
                 })
