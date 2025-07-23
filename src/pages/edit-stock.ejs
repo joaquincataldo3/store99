@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head') %>
+    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/edit-stock.css">
+    <script type="module" src="/scripts/edit-stock.js"></script>
+</head>
+
+<body>
+    <main class="user-form-main">
+  <section class="form-container">
+    <h1 id="model-name">Editar Stock</h1>
+    <div id="model-image-container"></div>
+
+    <form id="stock-form" class="form">
+      <fieldset class="checkbox-grid" id="sizes-grid">
+        <!-- Aquí se insertarán los talles dinámicamente -->
+      </fieldset>
+      <button type="submit">Actualizar stock</button>
+    </form>
+  </section>
+</main>
+</body>
+
+</html>

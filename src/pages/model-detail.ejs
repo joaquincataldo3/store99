@@ -9,24 +9,30 @@
 
 <body>
 
-  <main class="main-container">
-    <div class="carousel-container">
-      <div class="carousel" id="carousel">
-        <% model.files.forEach(file => { %>
-          <div class="carousel-item">
-            <img src="<%= file.key %>" alt="Imagen de zapatilla">
-          </div>
-        <% }) %>
-      </div>
-      <div class="dots" id="dots"></div>
+<main class="main-container">
+  <div class="carousel-container">
+    <div class="thumbnail-column" id="thumbnailColumn">
+      <% model.files.forEach((file, index) => { %>
+        <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+          <img src="<%= file.key %>" alt="Miniatura" data-index="<%= index %>">
+        </div>
+      <% }) %>
     </div>
 
-    <section class="product-info">
-      <h2 class="brand"><%= model.brand.name %></h2>
-      <h1 class="model-name"><%= model.name.toUpperCase() %></h1>
-      <p class="color"><%= model.color.charAt(0).toUpperCase() + model.color.slice(1) %></p>
-    </section>
-  </main>
+    <div class="main-image">
+      <img id="mainImage" src="<%= model.files[0]?.key %>" alt="Imagen principal">
+    </div>
+  </div>
+
+  <section class="product-info">
+    <h2 class="brand"><%= model.brand.name %></h2>
+    <h1 class="model-name"><%= model.name.toUpperCase() %></h1>
+    <p class="color"><%= model.color.charAt(0).toUpperCase() + model.color.slice(1) %></p>
+  </section>
+</main>
+
+<!-- Mobile dots -->
+<div class="dots" id="dots"></div>
    
 </body>
 </html>

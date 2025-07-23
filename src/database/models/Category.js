@@ -26,7 +26,8 @@ export default (sequelize, dataTypes) => {
             through: 'model_category',
             foreignKey: 'category_id',
             otherKey: 'model_id',
-            as: 'models'
+            as: 'models',
+            timestamps: false
         });
     };
 

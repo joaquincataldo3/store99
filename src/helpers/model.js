@@ -1,11 +1,23 @@
 import db from "../database/models/index.js";
-const { Model } = db;
+const { Model, ModelCategory, Brand, File, Category} = db;
 
-export const findAllModels = async () => {
-    return await Model.findAll({
-        include: ['brand']
-    });
-}
+export const findAllModelsByCategory = async (categoryId) => {
+  return await ModelCategory.findAll({
+    where: { category_id: categoryId },
+    include: [
+            {
+                association: 'model',
+                include: [
+                { association: 'brand' },
+                { association: 'files' }
+                ]
+            },
+            {
+                association: 'category'
+            }
+    ]
+  });
+};
 
 export const findModelByNameAndColor = async (name, color) => {
     try {
@@ -31,7 +43,20 @@ export const findModelById = async (shoeId) => {
     try {
         if (!shoeId || isNaN(Number(shoeId))) return undefined;
         const shoe = await Model.findByPk(shoeId, {
-            include: ['brand']
+                include: [
+            {
+                association: 'brand',
+            },
+            {
+                association: 'categories'
+            },
+            {
+                association: 'stocks'
+            },
+            {
+                association: 'files'
+            }
+    ]
         });
         return shoe;
     } catch (error) {

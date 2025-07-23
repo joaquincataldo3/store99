@@ -8,5 +8,6 @@ router.get('/registro', viewsController.register);
 router.get('/crear-modelo', checkUserAuth, viewsController.createModel);
 router.get('/zapatillas-encargue', viewsController.modelsList);
 router.get('/modelo/:shoeId', viewsController.modelDetail);
+router.get('/editar-stock', viewsController.editStock);
 
 export default router;

@@ -87,6 +87,7 @@ export const getFilesFromDbByShoeId = async (shoeId) => {
                 model_id: shoeId
             }
         })
+
         return files;
     } catch (error) {
         console.log('error obtaining files');

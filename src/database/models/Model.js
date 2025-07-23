@@ -43,7 +43,8 @@ export default (sequelize, dataTypes) => {
             through: Stock,
             foreignKey: 'model_id',
             otherKey: 'size_id',
-            as: 'sizes'
+            as: 'stocks',
+            timestamps: false
         });
     };
 

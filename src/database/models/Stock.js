@@ -20,5 +20,20 @@ export default (sequelize, dataTypes) => {
 
     const Stock = sequelize.define(alias, cols, config);
 
+    Stock.associate = (models) => {
+        const {Model, Size} = models;
+            Stock.belongsTo(Model, {
+            foreignKey: 'model_id',
+            as: 'model'
+        });
+
+        Stock.belongsTo(Size, {
+            foreignKey: 'size_id',
+            as: 'size'
+        });
+    };
+
+    
+
     return Stock;
 };

@@ -1,27 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const carousel = document.getElementById('carousel');
+  const thumbnails = document.querySelectorAll('.carousel-item img');
+  const mainImage = document.getElementById('mainImage');
   const dotsContainer = document.getElementById('dots');
-  const items = document.querySelectorAll('.carousel-item');
 
   let currentIndex = 0;
 
-  items.forEach((_, idx) => {
+  thumbnails.forEach((thumb, idx) => {
+    thumb.addEventListener('click', () => {
+      // Cambiar imagen principal
+      mainImage.src = thumb.src;
+
+      // Actualizar clases activas
+      thumbnails.forEach(t => t.parentElement.classList.remove('active'));
+      thumb.parentElement.classList.add('active');
+
+      // Actualizar dots si estás en mobile
+      dotsContainer.querySelectorAll('span').forEach(dot => dot.classList.remove('active'));
+      dotsContainer.querySelector(`span[data-index="${idx}"]`)?.classList.add('active');
+    });
+
+    // Crear dot solo en mobile
     const dot = document.createElement('span');
     dot.dataset.index = idx;
     if (idx === 0) dot.classList.add('active');
     dotsContainer.appendChild(dot);
 
     dot.addEventListener('click', () => {
-      carousel.scrollTo({ left: carousel.offsetWidth * idx, behavior: 'smooth' });
+      thumbnails[idx].click();
     });
-  });
-
-  carousel.addEventListener('scroll', () => {
-    const newIndex = Math.round(carousel.scrollLeft / carousel.offsetWidth);
-    if (newIndex !== currentIndex) {
-      dotsContainer.children[currentIndex]?.classList.remove('active');
-      dotsContainer.children[newIndex]?.classList.add('active');
-      currentIndex = newIndex;
-    }
   });
 });

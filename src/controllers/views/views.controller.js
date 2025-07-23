@@ -46,7 +46,10 @@ const controller = {
             console.log('Error al obtener el detalle del modelo:', error);
             return res.status(500).send('Error interno del servidor');
         }
-    }
+    },
+    editStock: (req, res) => {
+        return res.render('edit-stock')
+    },
 }
 
 export default controller;

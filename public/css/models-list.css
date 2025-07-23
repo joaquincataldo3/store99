@@ -93,4 +93,17 @@
   .shoe-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  .brand {
+    font-size: 20px;
+  }
+
+  .model {
+    font-size: 22px;
+  }
+
+  .color {
+    font-size: 18px;
+  }
+
 }

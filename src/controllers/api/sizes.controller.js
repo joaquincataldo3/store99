@@ -3,7 +3,8 @@ import { findAllInDb } from "../../helpers/size.js";
 const controller = {
     getAll: async (req, res) => {
         try {
-            const sizes = findAllInDb();
+            const sizes = await findAllInDb();
+
             return res.status(200).json({
                 msg: 'successfully retrieved sizes',
                 ok: true,
@@ -19,7 +20,8 @@ const controller = {
         }
         
 
-    }
+    },
+    
 }
 
 export default controller;

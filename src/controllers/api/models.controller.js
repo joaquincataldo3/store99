@@ -1,5 +1,5 @@
 import { deleteFilesFromDbByShoeId, filterFiles, getFilesFromDbByShoeId, handleModelFiles, insertFilesInDb } from "../../helpers/file.js";
-import { deleteModelById, findAllModels, findModelById, findModelByNameAndColor, insertModelInDb } from "../../helpers/model.js";
+import { deleteModelById, findAllModelsByCategory, findModelById, findModelByNameAndColor, insertModelInDb } from "../../helpers/model.js";
 import { findBrandById } from "../../helpers/brand.js";
 import { deleteFilesFromS3, getS3PublicUrl} from "../../helpers/aws.js";
 import { insertCategoriesWithModelId } from "../../helpers/category.js";
@@ -7,9 +7,18 @@ import { insertCategoriesWithModelId } from "../../helpers/category.js";
 const controller = {
     getAll: async (req, res) => {
         try {
-            const models = await findAllModels();
+            const {categoryId} = req.query;
+            console.log(categoryId)
+            if(!categoryId && Number(categoryId) !== 2 && Number(categoryId) !== 1){
+                return res.status(400).json({
+                    ok: false,
+                    msg:'invalid category id'
+                })
+            }
+            const modelsCategory = await findAllModelsByCategory(categoryId);
 
-            const enrichedModels = await Promise.all(models.map(async model => {
+            const enrichedModels = await Promise.all(modelsCategory.map(async modelCategory => {
+               const {model} = modelCategory;
             const filesFromDb = await getFilesFromDbByShoeId(model.id);
 
             const filesWithUrls = await Promise.all(
@@ -25,9 +34,10 @@ const controller = {
                 };
                 })
             );
+           
 
             return {
-                ...model.dataValues, // si estás usando Sequelize
+                ...model.dataValues, 
                 files: filesWithUrls
             };
             }));
@@ -43,6 +53,67 @@ const controller = {
             return res.status(500).json({
             msg: 'error obtaining all models',
             ok: false
+            });
+        }
+    },
+    getOne: async (req, res) => {
+        try {
+            const { modelId } = req.params;
+            if (!modelId || isNaN(modelId)) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Invalid model ID',
+            });
+            }
+
+            // Traer model + relaciones necesarias
+            const dbModel = await findModelById(modelId); // Una función similar a findAllModelsByCategory pero con findOne
+
+            if (!dbModel) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Model not found',
+            });
+            }
+
+            const model = dbModel;
+
+            const filesFromDb = await getFilesFromDbByShoeId(model.id);
+
+            const filesWithUrls = await Promise.all(
+            filesFromDb.map(async (file) => {
+                const regularUrl = await getS3PublicUrl(file.filename || file.regular_filename);
+                const thumbUrl =
+                file.main_file && file.thumb_filename
+                    ? await getS3PublicUrl(file.thumb_filename)
+                    : null;
+
+                return {
+                key: regularUrl,
+                thumb: thumbUrl,
+                main_file: file.main_file
+                };
+            })
+            );
+            filesWithUrls.sort((a, b) => (b.main_file || 0) - (a.main_file || 0));
+
+
+            const enrichedModel = {
+            ...model.dataValues,
+            files: filesWithUrls,
+            };
+
+            return res.status(200).json({
+            ok: true,
+            msg: 'Successfully retrieved model',
+            data: enrichedModel,
+            });
+        } catch (error) {
+            console.log('error obtaining model by id');
+            console.log(error);
+            return res.status(500).json({
+            ok: false,
+            msg: 'Internal server error',
             });
         }
     },

@@ -3,7 +3,8 @@ import modelsController from '../../controllers/api/models.controller.js';
 import multerMiddleware from '../../middlewares/multer.middleware.js';
 const router = express.Router();
 
-router.get('/', modelsController.getAll)
+router.get('/category', modelsController.getAll)
+router.get('/:modelId', modelsController.getOne)
 router.post('/',  multerMiddleware.array('images'), modelsController.create);
 router.delete('/:shoeId', modelsController.delete)
 
