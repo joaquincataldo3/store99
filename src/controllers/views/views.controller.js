@@ -51,7 +51,8 @@ const controller = {
         return res.render('edit-stock')
     },
     modelsStock: (req, res) => {
-        return res.render('models-stock')
+        console.log("Entrando a /zapatillas-stock");
+        return res.render('model-stocks');
     },
 }
 

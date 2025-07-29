@@ -26,7 +26,6 @@ const fetchData = async () => {
 
     allSizes = stocksData.data;
     currentModel = modelData.data;
-    console.log(allSizes)
 
     renderModelInfo();
     renderSizes();

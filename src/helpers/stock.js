@@ -24,7 +24,19 @@ export const findStockByModel = async (modelId) => {
 
 export const findAll = async () => {
     return await Stock.findAll({
-        include: ['size']
+        include: [
+        {
+            association: 'size' 
+        },
+        {
+            association: 'model',
+            include: [
+            { association: 'files' },
+            { association: 'categories' },
+            { association: 'brand' }
+            ]
+        }
+        ]
     });
 }
 

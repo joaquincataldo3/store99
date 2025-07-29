@@ -22,8 +22,6 @@ const controller = {
             const sanitizedEmail = email.toLowerCase();
 
             const userExists = await findByEmail(sanitizedEmail);
-            console.log('user')
-            console.log(userExists)
             if(userExists === undefined){
                 return res.status(500).json({
                     ok: false,

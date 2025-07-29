@@ -1,4 +1,6 @@
 import { findAll, findStockByModel, syncStockSizes } from "../../helpers/stock.js";
+import { getFilesFromDbByShoeId } from "../../helpers/file.js";
+import { getS3PublicUrl } from "../../helpers/aws.js";
 
 const controller = {
     getStockByModel: async (req, res) => {
@@ -27,11 +29,54 @@ const controller = {
     },
     getAllStocks: async (req, res) => {
         try {
-            const stock = await findAll();
+            const stock = await findAll(); 
+
+          
+            const modelMap = new Map();
+
+            stock.forEach(entry => {
+                if (!modelMap.has(entry.model.id)) {
+                    modelMap.set(entry.model.id, entry.model);
+                }
+            });
+
+            const enrichedModelsMap = new Map();
+
+            await Promise.all(
+            Array.from(modelMap.entries()).map(async ([id, model]) => {
+                const filesFromDb = await getFilesFromDbByShoeId(model.id);
+
+                const filesWithUrls = await Promise.all(
+                    filesFromDb.map(async file => {
+                        const regularUrl = await getS3PublicUrl(file.filename || file.regular_filename);
+                        const thumbUrl = file.main_file && file.thumb_filename
+                        ? await getS3PublicUrl(file.thumb_filename)
+                        : null;
+
+                        return {
+                            key: regularUrl,
+                            thumb: thumbUrl
+                        };
+                    })
+                );
+                const clonedModel = {
+                    ...model.get({ plain: true }),  
+                    files: filesWithUrls
+                };
+                enrichedModelsMap.set(id, clonedModel);
+                
+                })
+            );
+
+            const finalStock = stock.map(entry => ({
+                id: entry.id,
+                size: entry.size,
+                model: enrichedModelsMap.get(entry.model.id)
+            }))
             return res.status(200).json({
                 ok: true,
                 msg: 'successfully retrieved all stock',
-                data: stock
+                data: finalStock
             })
         } catch (error) {
             console.log('error getting stock by model');

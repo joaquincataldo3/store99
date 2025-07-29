@@ -1,0 +1,27 @@
+.size-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 15px;
+}
+
+.size-tag {
+  background-color: #fc4d4d;
+  color: #fdfdfd;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  border: 1px solid #ddd;
+  transition: background-color 0.2s ease;
+}
+
+.size-tag:hover {
+  background-color: #e0e0e0;
+}
+
+@media (min-width: 1200px) {
+  .size-tag {
+    font-size: 22px;
+  }
+}

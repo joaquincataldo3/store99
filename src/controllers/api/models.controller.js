@@ -8,7 +8,7 @@ const controller = {
     getAll: async (req, res) => {
         try {
             const {categoryId} = req.query;
-            console.log(categoryId)
+    
             if(!categoryId && Number(categoryId) !== 2 && Number(categoryId) !== 1){
                 return res.status(400).json({
                     ok: false,
