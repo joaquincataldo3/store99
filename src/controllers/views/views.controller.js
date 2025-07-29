@@ -50,6 +50,9 @@ const controller = {
     editStock: (req, res) => {
         return res.render('edit-stock')
     },
+    modelsStock: (req, res) => {
+        return res.render('models-stock')
+    },
 }
 
 export default controller;
