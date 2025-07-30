@@ -72,7 +72,7 @@
   text-transform: capitalize;
 }
 
-/* Responsive grid */
+
 @media (min-width: 480px) {
   .shoe-grid {
     grid-template-columns: repeat(2, 1fr);
