@@ -1,6 +1,7 @@
 import { findModelById } from "../../helpers/model.js";
 import { getFilesFromDbByShoeId } from "../../helpers/file.js";
 import { getS3PublicUrl } from "../../helpers/aws.js";
+import { isLogged } from "../../helpers/auth.js";
 
 
 const controller = {
@@ -51,8 +52,8 @@ const controller = {
         return res.render('edit-stock')
     },
     modelsStock: (req, res) => {
-        console.log("Entrando a /zapatillas-stock");
-        return res.render('model-stocks');
+        const isLogged = isLogged(req);
+        return res.render('model-stocks', {isLogged});
     },
 }
 

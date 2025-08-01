@@ -23,7 +23,8 @@
 
 .shoe-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(1, 80%);
+  justify-content: center;
   gap: 20px;
 }
 
@@ -43,7 +44,7 @@
 
 .card img {
   width: 100%;
-  height: 300px;
+  height: 275px;
   object-fit: cover;
   display: block;
 }
@@ -95,11 +96,28 @@
   }
 
   .brand {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .model {
-    font-size: 22px;
+    font-size: 18px;
+  }
+
+  .color {
+    font-size: 16px;
+  }
+
+}
+
+@media (min-width: 1400px) {
+ 
+
+  .brand {
+    font-size: 18px;
+  }
+
+  .model {
+    font-size: 20px;
   }
 
   .color {

@@ -4,5 +4,8 @@
   padding: 0;
 }
 
-
+:root {
+  --light-grey: rgb(184, 184, 184);
+  --heavy-grey: rgb(122, 122, 122);
+}
 

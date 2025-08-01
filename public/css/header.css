@@ -3,7 +3,7 @@ header {
   background-color: white;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   position: block;
-  background-color: rgb(141, 141, 141);
+  background-color: var(--light-grey);
 }
 
 .navbar {
@@ -43,19 +43,19 @@ header {
 .nav-links-mobile {
   display: flex;
   position: fixed;
-  left: -100%;
+  left: -105%;
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: rgb(141, 141, 141);
+  background-color: var(--light-grey);
   width: 100vw;
   height: 100vh;
   list-style: none;
   flex-direction: column;
-  padding: 2rem;
   gap: 1.5rem;
   z-index: 1000;
   transition: left 0.3s ease;
+  padding: 2rem;
 }
 
 .nav-links-mobile.active {
@@ -102,8 +102,12 @@ header {
         padding: 0 5%;
     }
 
+    .nav-links-mobile {
+      display: none;
+    }
+
     .nav-links-desktop {
-        font-size: 18px;
+        font-size: 16px;
     }
 
 }
@@ -115,7 +119,7 @@ header {
     }
 
     .nav-links-desktop {
-        font-size: 20px;
+        font-size: 18px;
     }
 
 }
