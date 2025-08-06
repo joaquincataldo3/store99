@@ -1,7 +1,7 @@
 import { findModelById } from "../../helpers/model.js";
 import { getFilesFromDbByShoeId } from "../../helpers/file.js";
 import { getS3PublicUrl } from "../../helpers/aws.js";
-import { isLogged } from "../../helpers/auth.js";
+import { checkIfLogged } from "../../helpers/auth.js";
 
 
 const controller = {
@@ -52,7 +52,7 @@ const controller = {
         return res.render('edit-stock')
     },
     modelsStock: (req, res) => {
-        const isLogged = isLogged(req);
+        const isLogged = checkIfLogged(req);
         return res.render('model-stocks', {isLogged});
     },
 }

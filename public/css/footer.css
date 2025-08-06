@@ -1,4 +1,54 @@
-footer {
-    border-top: 1px solid var(--heavy-grey);
-    background-color: var(--light-grey);
+.footer {
+  background-color: var(--light-grey);
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+  margin-top: 60px;
 }
+
+
+.cookies-section {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.social-links {
+  margin: 1rem 0;
+}
+
+.social-icon {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.2s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+}
+
+.p-copy {
+    margin-top: 10px;
+}
+
+.p-copy:first-child {
+    margin-top: 0;
+}
+
+
+
+
+@media (max-width: 600px) {
+  .footer {
+    font-size: 0.85rem;
+    padding: 1rem;
+    margin-top: 40px;
+  }
+
+  .social-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+

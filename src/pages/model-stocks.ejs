@@ -13,10 +13,28 @@
   <main>
     <div class="loader" id="loader"></div>
     <div class="container">
+      <div class="titles-container">
+        <h1 class="title">Zapatillas en stock</h1>
+        <h3 class="subtitle">Entrega inmediata</h3>
+      </div>
+      <div class="filter-container">
+        <div class="filter-toggle">
+          <i class='bx bx-filter'></i> Filtrar por talle
+        </div>
+      </div>
       <div id="shoe-list" class="shoe-grid"></div>
     </div>
-  </main>
-
+    <div id="filterModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Filtrar por talle</h2>
+        <div id="size-filters" class="size-filters"></div>
+        <div class="modal-actions">
+          <button id="cancelFilter" class="cancel-btn">Cancelar</button>
+          <button id="applyFilter" class="apply-btn">Aplicar</button>
+        </div>
+    </div>
+</div>
   <%- include ('partials/footer') %>
    
 </body>

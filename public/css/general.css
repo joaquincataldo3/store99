@@ -2,10 +2,181 @@
       box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+main {
+  min-height: 65vh;
 }
 
 :root {
-  --light-grey: rgb(184, 184, 184);
+  --light-grey: rgb(207, 207, 207);
   --heavy-grey: rgb(122, 122, 122);
+  --light-red: #fc4d4d;
 }
 
+.titles-container, .filter-container {
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.filter-container {
+  margin-top: 75px;
+}
+
+.filter-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.filter-toggle {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Close button */
+.close-modal {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Size filters inside modal */
+.size-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.size-filters button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid black;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.size-filters button.active {
+  background: var(--light-red);
+  color: white;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.modal-actions button {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.cancel-btn {
+  background-color: #ddd;
+}
+
+.apply-btn {
+  background-color: black;
+  color: white;
+}
+
+@media (min-width: 1024px) {
+
+  .title {
+    font-size: 26px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+
+  .filter-toggle {
+    font-size: 16px;
+    gap: 0.7rem;
+  }
+
+  .modal-content {
+    max-width: 500px;
+    padding: 2rem;
+  }
+
+  .size-filters button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (min-width: 1300px) {
+
+  .title {
+    font-size: 30px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+  }
+
+  .filter-toggle {
+    font-size: 18px;
+    gap: 1rem;
+  }
+
+  .modal-content {
+    max-width: 600px;
+    padding: 2.5rem;
+  }
+
+  .size-filters button {
+    font-size: 1.1rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .modal-actions button {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+  }
+}

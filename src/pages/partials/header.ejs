@@ -9,21 +9,42 @@
       <i class='bx bx-menu'></i>
     </div>
 
-     <!-- Menú desplegable mobile -->
-    <ul class="nav-links-mobile" id="mobileMenu">
-      <li class="close-btn" id="closeBtn"><i class='bx bx-x'></i></li>
-      <li><a class="nav-link" href="/zapatillas-stock">Zapatillas en stock</a></li>
-      <li><a class="nav-link" href="/zapatillas-encargue">Zapatillas por encargue</a></li>
-      <li><a class="nav-link" href="/como-comprar">Cómo comprar</a></li>
-      <li><a class="nav-link" href="/quienes-somos">Quiénes somos</a></li>
-    </ul>
-
     <!-- Menú desktop -->
     <ul class="nav-links-desktop">
       <li><a href="/zapatillas-stock">Zapatillas en stock</a></li>
-      <li><a href="/zapatillas-encargue">Zapatillas por encargue</a></li>
+
+      <li class="has-submenu">
+        
+        <a href="/zapatillas-encargue">Zapatillas por encargue</a>
+        
+        <ul class="submenu">
+          <li><a href="/zapatillas-encargue?categoryId=1">Niño</a></li>
+          <li><a href="/zapatillas-encargue?categoryId=2">Adulto</a></li>
+        </ul>
+      </li>
+
       <li><a href="/como-comprar">Cómo comprar</a></li>
       <li><a href="/quienes-somos">Quiénes somos</a></li>
+    </ul>
+
+    <!-- Menú mobile -->
+    <ul class="nav-links-mobile" id="mobileMenu">
+      <li class="close-btn" id="closeBtn"><i class='bx bx-x'></i></li>
+      <li><a class="nav-link" href="/zapatillas-stock">Zapatillas en stock</a></li>
+
+      <li class="has-submenu-mobile">
+        <div class="link-arrow-container">
+          <span class="nav-link">Zapatillas por encargue</span>
+          <i class='bx  bx-caret-right'  ></i> 
+        </div>
+        <ul class="submenu-mobile">
+          <li><a href="/zapatillas-encargue?categoryId=1" class="mobile-submenu-link">Niño</a></li>
+          <li><a href="/zapatillas-encargue?categoryId=2" class="mobile-submenu-link">Adulto</a></li>
+        </ul>
+      </li>
+
+      <li><a class="nav-link" href="/como-comprar">Cómo comprar</a></li>
+      <li><a class="nav-link" href="/quienes-somos">Quiénes somos</a></li>
     </ul>
   </nav>
 </header>

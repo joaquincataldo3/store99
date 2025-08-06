@@ -8,9 +8,13 @@
 </head>
 
 <body>
-
+    <%- include ('partials/header') %>
     <main class="main-container">
       <div class="carousel-container">
+        
+        <div class="main-image">
+          <img id="mainImage" src="<%= model.files[0]?.key %>" alt="Imagen principal">
+        </div>
         <div class="thumbnail-column" id="thumbnailColumn">
           <% model.files.forEach((file, index) => { %>
             <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
@@ -18,26 +22,32 @@
             </div>
           <% }) %>
         </div>
-
-        <div class="main-image">
-          <img id="mainImage" src="<%= model.files[0]?.key %>" alt="Imagen principal">
-        </div>
       </div>
+      <!-- Mobile dots -->
+      <div class="dots" id="dots"></div>
 
       <section class="product-info">
-        <h2 class="brand"><%= model.brand.name %></h2>
-        <h1 class="model-name"><%= model.name.toUpperCase() %></h1>
-        <p class="color"><%= model.color.charAt(0).toUpperCase() + model.color.slice(1) %></p>
+        <div class="product-props">
+          <h2 class="brand"><%= model.brand.name %></h2>
+          <h1 class="model-name"><%= model.name.toUpperCase() %></h1>
+          <p class="color"><%= model.color.charAt(0).toUpperCase() + model.color.slice(1) %></p>
+        </div>
+      
+        <div class="copy">
+          <p>Consultar por formas de pago al whatsapp</p>
+          <p>Envíos a todo el país</p>
+          <p>Podes chequear las reviews de la zapatilla <a href="https://weartesters.com/">acá</a></p>
+        </div>
       </section>
     </main>
 
-    <!-- Mobile dots -->
-    <div class="dots" id="dots"></div>
 
     <section class="actions-buttons">
       <button class="action-btn" href="/editar-stock?modelId=<%= model.id %>">Actualizar stock</button>
       <button class="action-btn delete-btn">Eliminar</button>
     </section>
    
+    <%- include ('partials/footer') %>
+
 </body>
 </html>

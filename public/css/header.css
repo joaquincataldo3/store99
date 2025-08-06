@@ -26,7 +26,7 @@ header {
   list-style: none;
 }
 
-.nav-links-desktop li a {
+.nav-links-desktop li a, .nav-link {
   text-decoration: none;
   color: black;
   font-weight: 500;
@@ -62,8 +62,8 @@ header {
   left: 0;
 }
 
-.nav-links-mobile li a {
-  font-size: 20px;
+.nav-links-mobile li a, .nav-link {
+  font-size: 25px;
   text-decoration: none;
   color: black;
 }
@@ -75,8 +75,90 @@ header {
   cursor: pointer;
 }
 
+.has-submenu {
+  position: relative;
+}
+
+.submenu {
+  position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    list-style: none;
+    overflow: hidden;
+    padding: 0;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.submenu li {
+  padding: 0.5rem 1rem;
+}
+
+.submenu li a {
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+  display: block;
+}
+
+.has-submenu:hover .submenu {
+   max-height: 200px; 
+  opacity: 1;
+  visibility: visible;
+  padding: 0.5rem 0;
+}
+
+/* Mobile submenu */
+.has-submenu-mobile {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.submenu-mobile {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.has-submenu-mobile.active .submenu-mobile {
+  max-height: 1000px; 
+}
+
+.has-submenu-mobile .bx-caret-right {
+  transition: transform 0.3s ease;
+}
+
+/* Cuando está abierto */
+.has-submenu-mobile.active .bx-caret-right {
+  transform: rotate(90deg);
+}
+
+.has-submenu-mobile.active .submenu-mobile {
+  max-height: 1000px; /* Ajustá si necesitás más o menos */
+}
+
+.submenu-mobile li {
+  margin-bottom: 5px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.mobile-submenu-link {
+  font-size: 18px!important;
+}
+
 /* Responsive rules */
 @media (max-width: 768px) {
+
+  .header {
+    margin-bottom: 40px;
+  }
 
   .logo img {
     width: 180px;
