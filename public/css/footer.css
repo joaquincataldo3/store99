@@ -1,5 +1,5 @@
 .footer {
-  background-color: var(--light-grey);
+  box-shadow: 0 -5px 10px rgba(0,0,0,0.1);
   padding: 1.5rem;
   text-align: center;
   font-size: 0.9rem;

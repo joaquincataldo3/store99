@@ -1,9 +1,9 @@
 header {
   width: 100%;
   background-color: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
   position: block;
-  background-color: var(--light-grey);
+  
 }
 
 .navbar {
@@ -154,7 +154,7 @@ header {
 }
 
 /* Responsive rules */
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
 
   .header {
     margin-bottom: 40px;
@@ -178,7 +178,7 @@ header {
   }
 }
 
-@media (min-width: 1024px) {
+ @media (min-width: 1024px) {
 
     header {
         padding: 0 5%;
@@ -192,7 +192,7 @@ header {
         font-size: 16px;
     }
 
-}
+} 
 
 @media (min-width: 1300px) {
 

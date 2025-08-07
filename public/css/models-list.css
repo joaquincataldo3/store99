@@ -86,7 +86,14 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
+  .card {
+    width: 85%;
+  }
+}
+
+
+@media (min-width: 1300px) {
   .container {
     max-width: 75%;
   }
@@ -113,7 +120,7 @@
 
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1450px) {
  
 
   .brand {
