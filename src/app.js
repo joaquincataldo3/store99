@@ -69,6 +69,6 @@ app.use((req, res, next) => {
   return res.status(404).render('not-found');
 });
 
-app.listen(PORT, () => {
-  console.log(" 🚀 Se levanto proyecto en puerto " + PORT);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Proyecto levantado en http://0.0.0.0:${PORT}`);
 });

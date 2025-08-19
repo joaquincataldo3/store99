@@ -5,6 +5,9 @@ import { checkIfLogged } from "../../helpers/auth.js";
 
 
 const controller = {
+    home: (req, res) => {
+        return res.render('home');
+    },
     signIn: (req, res) => {
         return res.render('sign-in');
     },
@@ -36,12 +39,13 @@ const controller = {
                     };
                 })
             );
-
+            const isLogged = checkIfLogged(req, res);
             return res.render('model-detail', {
-            model: {
-                ...dbModel.dataValues, 
-                files: filesWithUrls
-            }
+                model: {
+                    ...dbModel.dataValues, 
+                    files: filesWithUrls
+                },
+                isLogged
             });
         } catch (error) {
             console.log('Error al obtener el detalle del modelo:', error);

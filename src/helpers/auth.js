@@ -5,10 +5,10 @@ export const checkIfLogged = (req, res) => {
 
     if (token) {
         try {
-        jwt.verify(token, process.env.JSONWEBTOKEN_SECRET);
-        return true;
-        } catch (err) {
-        console.log('Token inválido:', err.message);
+            jwt.verify(token, process.env.JSONWEBTOKEN_SECRET);
+            return true;
+            } catch (err) {
+            console.log('Token inválido:', err.message);
         }
     }
 

@@ -10,21 +10,32 @@
 <body>
     <%- include ('partials/header') %>
     <main class="main-container">
-      <div class="carousel-container">
-        
-        <div class="thumbnail-column" id="thumbnailColumn">
-          <% model.files.forEach((file, index) => { %>
-            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-              <img src="<%= file.key %>" alt="Miniatura" data-index="<%= index %>">
-            </div>
-          <% }) %>
+        <!-- MOBILE CAROUSEL (solo se muestra <900px) -->
+        <div class="mobile-carousel" id="mobileCarousel">
+          <div class="mobile-slider" id="mobileSlider" aria-live="polite">
+            <% model.files.forEach((file, index) => { %>
+              <div class="mobile-slide" role="group" aria-roledescription="slide" aria-label="<%= index + 1 %> de <%= model.files.length %>">
+                <img src="<%= file.key %>" alt="Imagen <%= index + 1 %>">
+              </div>
+            <% }) %>
+          </div>
+          <div class="dots" id="dots"></div>
         </div>
+
+          <!-- DESKTOP (tu layout actual “tipo Nike”) -->
+          <div class="carousel-container">
+            <div class="thumbnail-column" id="thumbnailColumn">
+              <% model.files.forEach((file, index) => { %>
+                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                  <img src="<%= file.key %>" alt="Miniatura" data-index="<%= index %>">
+                </div>
+              <% }) %>
+            </div>
+
         <div class="main-image">
           <img id="mainImage" src="<%= model.files[0]?.key %>" alt="Imagen principal">
         </div>
-      </div>
-      <!-- Mobile dots -->
-      <div class="dots" id="dots"></div>
+  </div>
 
       <section class="product-info">
         <div class="product-props">
@@ -37,16 +48,30 @@
           <li><i class='bx  bx-square'  ></i> Consultanos disponibilidad</li>
           <li><i class='bx  bx-square'  ></i> Distintas formas de pago</li>
           <li><i class='bx  bx-square'  ></i> Envíos a todo el país</li>
-          <li><i class='bx  bx-square'  ></i> Podes chequear las reviews de la zapatilla <a href="https://weartesters.com/">acá</a></p>
+          <li><i class='bx  bx-square'  ></i> Chequeá las reviews <a href="https://weartesters.com/"><img class="wear" src="/assets/wear.png" alt=""></a></p>
         </ul>
+
+       
       </section>
     </main>
 
-
-    <section class="actions-buttons">
-      <button class="action-btn" href="/editar-stock?modelId=<%= model.id %>">Actualizar stock</button>
-      <button class="action-btn delete-btn">Eliminar</button>
-    </section>
+   
+    <% if(locals.isLogged) {  %>
+       <section class="actions-buttons">
+            <a class="action-btn" href="/editar-stock?modelId=<%= model.id %>">Actualizar stock</a>
+            <button class="action-btn delete-btn">Eliminar</button>
+        </section>
+    <div id="deleteModal" class="modal-overlay">
+      <div class="modal-content">
+        <h3>¿Estás seguro de eliminarlo?</h3>
+        <div class="modal-actions">
+          <button id="confirmDelete" class="action-btn delete-btn">Aceptar</button>
+          <button id="cancelDelete" class="action-btn">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <%  } %>
+    
    
     <%- include ('partials/footer') %>
 

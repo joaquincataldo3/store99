@@ -1,0 +1,105 @@
+html, body { margin:0; padding:0; background: var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+img { display:block; max-width:100%; }
+.container { width: min(100% - 24px, var(--maxw)); margin-inline: auto; }
+
+.hero { padding: 12px 0 28px; }
+.carousel { position: relative; border-radius: var(--radius); overflow: hidden; background: #0e0f12; }
+.slides { display:flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+.slides::-webkit-scrollbar{ display: none; }
+.slide {   min-width: 100%;
+  flex: 0 0 100%;
+  position: relative;
+  scroll-snap-align: center;
+   touch-action: pan-y;
+
+  /* Mobile: altura mínima */
+  min-height: 500px;  }
+.slide img {  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-user-drag: none;
+  user-select: none; }
+.slide-overlay { position:absolute; inset:0; display:grid; place-items:end center; padding: 18px 14px; background: linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.38) 100%); }
+.slide-copy { text-align:left; max-width: 640px; }
+.eyebrow { text-transform: uppercase; letter-spacing:.16em; font-size:.8rem; color: var(--accent); margin:0 0 8px; }
+.slide-copy h1 { margin:0 0 8px; font-size: clamp(1.2rem, 6vw, 2rem); }
+.subtitle { color: var(--muted); margin: 0 0 14px; }
+.dots { position:absolute; bottom:14px; left:50%; transform: translateX(-50%); display:flex; gap:8px; }
+.dots span { width:8px; height:8px; border-radius:999px; background:#4b4b51; opacity:.7; transition: transform .2s ease, opacity .2s ease; }
+.dots span.active { background:#fff; opacity:1; transform: scale(1.15); }
+
+/* visibilidad: mobile primero */
+.carousel--mobile { display:block; }
+.carousel--desktop { display:none; }
+
+.value-props {
+  background: #fafafa;
+  padding: 3rem 1rem;
+}
+
+.props-grid {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Mobile: 1 columna */
+.prop {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.prop:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.prop-ico {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prop h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.prop p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+
+@media (min-width: 600px) {
+  .props-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1023px) {
+  .slides { touch-action: none; }              /* evita pan/drag del usuario */
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;                          /* llena el cuadrado */
+  }
+}
+
+@media (min-width: 1024px) {
+ .slide {
+    min-height: unset;        /* ya no obligamos a 500px */
+    aspect-ratio: 16/9;       /* se adapta con proporción panorámica */
+  }
+  .carousel--mobile { display: none; }
+  .carousel--desktop { display: block; }
+   .props-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

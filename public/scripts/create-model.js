@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const brandSelect = document.getElementById('brand');
   const brandSpinner = document.getElementById('brand-spinner');
 
-  const allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
-
   // Cargar brands
   async function loadBrands() {
     brandSpinner.style.display = 'block';

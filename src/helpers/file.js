@@ -3,7 +3,7 @@ import db from "../database/models/index.js";
 import sharp from "sharp";
 const { File } = db;
 
-const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
 
 export const handleModelFiles = async (files, frontendMetadata = []) => {
   try {
@@ -16,7 +16,7 @@ export const handleModelFiles = async (files, frontendMetadata = []) => {
       // Comprimir imagen principal (grande)
       const compressedImage = await compressImage(file);
       const key = meta.filename;
-      const fileKey = await uploadFile(compressedImage, key, 'image/jpeg');
+      const fileKey = await uploadFile(compressedImage, key, 'image/webp');
 
       const fileEntry = {
         regular_filename: fileKey,
@@ -27,7 +27,7 @@ export const handleModelFiles = async (files, frontendMetadata = []) => {
       if (meta.main_file) {
         const thumbKey = key.replace(/(\.jpg|\.jpeg|\.png)$/i, '_thumb$1');
         const thumbImage = await compressImage(file, 600); 
-        const thumbFileKey = await uploadFile(thumbImage, thumbKey, 'image/jpeg');
+        const thumbFileKey = await uploadFile(thumbImage, thumbKey, 'image/webp');
         fileEntry.thumb_filename = thumbFileKey;
       }
 

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include ('partials/head') %>
+    <link rel="stylesheet" href="/css/home.css">
+    <script type="module" src="/scripts/home.js"></script>
+</head>
+
+<body>
+    <%- include ('partials/header') %>
+  <main>
+<!-- === MOBILE SLIDER (visible <1024px) === -->
+<div class="carousel carousel--mobile" id="heroCarouselMobile" aria-roledescription="carousel" aria-label="Destacados mobile">
+  <div class="slides" id="heroSlidesMobile" aria-live="polite">
+    <div class="slide" role="group" aria-label="Slide 1 de 3">
+      <img src="/assets/banner-mobile1.png" alt="Zapatillas exclusivas Nike" loading="eager" />
+    </div>
+    <div class="slide" role="group" aria-label="Slide 2 de 3">
+      <img src="/assets/banner-mobile2.png" alt="Adidas Harden Vol. 8" loading="lazy" />
+    </div>
+    <div class="slide" role="group" aria-label="Slide 3 de 3">
+      <img src="/assets/banner-mobile3.png" alt="Li-Ning Way of Wade 11" loading="lazy" />
+    </div>
+  </div>
+  <div class="dots" id="heroDotsMobile" aria-hidden="false"></div>
+</div>
+
+<!-- === DESKTOP SLIDER (visible ≥1024px) === -->
+<div class="carousel carousel--desktop" id="heroCarouselDesktop" aria-roledescription="carousel" aria-label="Destacados desktop">
+  <div class="slides" id="heroSlidesDesktop" aria-live="polite">
+    <div class="slide" role="group" aria-label="Slide 1 de 3">
+      <img src="/assets/banner1.png" alt="Zapatillas exclusivas Nike" loading="eager" />
+    </div>
+    <div class="slide" role="group" aria-label="Slide 2 de 3">
+      <img src="/assets/banner2.png" alt="Adidas Harden Vol. 8" loading="lazy" />
+    </div>
+    <div class="slide" role="group" aria-label="Slide 3 de 3">
+      <img src="/assets/banner3.png" alt="Li-Ning Way of Wade 11" loading="lazy" />
+    </div>
+  </div>
+  <div class="dots" id="heroDotsDesktop" aria-hidden="false"></div>
+</div>
+
+
+</section>
+
+    <!-- VENTAJAS / VALUE PROPS -->
+    <section class="value-props">
+      <div class="container props-grid">
+        <article class="prop">
+          <div class="prop-ico" aria-hidden>🇺🇸</div>
+          <h3>Exclusivas de USA</h3>
+          <p>Modelos y colorways que no se consiguen acá. Pedido bajo demanda.</p>
+        </article>
+        <article class="prop">
+          <div class="prop-ico" aria-hidden>✅</div>
+          <h3>Autenticidad garantizada</h3>
+          <p>Trabajamos con retailers oficiales y chequeos de calidad en origen.</p>
+        </article>
+        <article class="prop">
+          <div class="prop-ico" aria-hidden>🚚</div>
+          <h3>Envío a todo el país</h3>
+          <p>Seguimiento puerta a puerta y embalaje protegido.</p>
+        </article>
+        <article class="prop">
+          <div class="prop-ico" aria-hidden>💬</div>
+          <h3>Asesoría personalizada</h3>
+          <p>Te ayudamos a elegir talla y silueta según tu juego.</p>
+        </article>
+      </div>
+    </section>
+    
+   
+    <%- include ('partials/footer') %>
+
+</body>
+</html>

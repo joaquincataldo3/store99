@@ -23,9 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const submenu = document.querySelector('.has-submenu');
     const arrow = submenu.querySelector('.bx-caret-right');
 
-    arrow.addEventListener('click', (e) => {
-      e.preventDefault(); // evita redirección si es un <a>
-      submenu.classList.toggle('open');
-    });
+    if(arrow){
+      arrow.addEventListener('click', (e) => {
+        e.preventDefault(); // evita redirección si es un <a>
+        submenu.classList.toggle('open');
+      });
+
+    }
 
   });
