@@ -5,11 +5,11 @@ const router = express.Router();
 
 router.get('/', viewsController.home);
 router.get('/inicio-sesion', viewsController.signIn);
-router.get('/registro', checkUserAuth, viewsController.register);
-router.get('/crear-modelo', checkUserAuth, viewsController.createModel);
+router.get('/registro', viewsController.register);
+router.get('/crear-modelo', viewsController.createModel);
 router.get('/zapatillas-encargue', viewsController.modelsList);
 router.get('/modelo/:shoeId', viewsController.modelDetail);
-router.get('/editar-stock', checkUserAuth, viewsController.editStock);
+router.get('/editar-stock', viewsController.editStock);
 router.get('/zapatillas-stock', viewsController.modelsStock);
 
 export default router;
