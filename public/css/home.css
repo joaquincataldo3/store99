@@ -10,7 +10,7 @@ img { display:block; max-width:100%; }
   flex: 0 0 100%;
   position: relative;
   scroll-snap-align: center;
-   touch-action: pan-y;
+  touch-action: pan-x pinch-zoom;
 
   /* Mobile: altura mínima */
   min-height: 500px;  }
