@@ -266,7 +266,6 @@ const controller = {
     },
     getLatest: async (req, res) => {
         try {
-            console.log('llego')
             const latestModels = await findLatest();
             const enrichedModels = await Promise.all(latestModels.map(async model => {
                 const filesFromDb = await getFilesFromDbByShoeId(model.id);
