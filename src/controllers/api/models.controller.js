@@ -1,5 +1,5 @@
 import { deleteFilesFromDbByShoeId, filterFiles, getFilesFromDbByShoeId, handleModelFiles, insertFilesInDb } from "../../helpers/file.js";
-import { deleteModelById, findAllModelsByCategory, findModelById, findModelByNameAndColor, insertModelInDb } from "../../helpers/model.js";
+import { deleteModelById, findAllModelsByCategory, findLatest, findModelById, findModelByNameAndColor, insertModelInDb } from "../../helpers/model.js";
 import { findBrandById } from "../../helpers/brand.js";
 import { deleteFilesFromS3, getS3PublicUrl} from "../../helpers/aws.js";
 import { insertCategoriesWithModelId } from "../../helpers/category.js";
@@ -263,6 +263,48 @@ const controller = {
             })
         }
         
+    },
+    getLatest: async (req, res) => {
+        try {
+            console.log('llego')
+            const latestModels = await findLatest();
+            const enrichedModels = await Promise.all(latestModels.map(async model => {
+                const filesFromDb = await getFilesFromDbByShoeId(model.id);
+
+                const filesWithUrls = await Promise.all(
+                    filesFromDb.map(async file => {
+                    const regularUrl = await getS3PublicUrl(file.filename || file.regular_filename);
+                    const thumbUrl = file.main_file && file.thumb_filename
+                        ? await getS3PublicUrl(file.thumb_filename)
+                        : null;
+
+                    return {
+                        key: regularUrl,
+                        thumb: thumbUrl
+                    };
+                    })
+                );
+           
+
+                return {
+                    ...model.dataValues, 
+                    files: filesWithUrls
+                };
+            }));
+
+            return res.status(200).json({
+                ok: true,
+                msg: 'successfully retrieved latest models',
+                data: enrichedModels
+            });
+        } catch (error) {
+            console.log('error obtaining latest models');
+            console.log(error);
+            return res.status(500).json({
+                msg: 'error obtaining latest models',
+                ok: false
+            });
+        }
     }
 }
 

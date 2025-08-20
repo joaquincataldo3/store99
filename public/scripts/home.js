@@ -105,8 +105,41 @@ function initInfiniteSlider({ sliderId, dotsId, desktop = false }) {
   return { start, stop };
 }
 
+const loadLatestModels = async () => {
+   try {
+    const res = await fetch('/api/model/latest');
+    const resJson = await res.json();
+    const models = resJson.data;
+    const shoeList = document.getElementById('shoe-list');
+
+    models.forEach(modelData => {
+      const card = document.createElement('a');
+      card.classList.add('card');
+      card.href = `/modelo/${modelData.id}`;
+
+      const mainImage = modelData.files?.find(f => f.thumb !== null)?.thumb;
+      console.log(modelData.files)
+
+      card.innerHTML = `
+        <img src="${mainImage}" alt="${modelData.name}">
+        <div class="card-body">
+          <div class="brand">${modelData.brand?.name || 'Sin marca'}</div>
+          <div class="model">${modelData.name}</div>
+          <div class="color">${modelData.color}</div>
+        </div>
+      `;
+
+      shoeList.appendChild(card);
+    });
+  } catch (err) {
+    console.log(err);
+    shoeList.innerHTML = `<p>Error al cargar los modelos.</p>`;
+  }
+}
+
 // INIT: mobile + desktop (corre el visible; el otro queda pausado por IO/breakpoint)
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   initInfiniteSlider({ sliderId: 'heroSlidesMobile',  dotsId: 'heroDotsMobile',  desktop: false });
   initInfiniteSlider({ sliderId: 'heroSlidesDesktop', dotsId: 'heroDotsDesktop', desktop: true  });
+  await loadLatestModels();
 });

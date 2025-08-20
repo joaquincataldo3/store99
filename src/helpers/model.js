@@ -98,3 +98,23 @@ export const deleteModelById = async (shoeId) => {
         return false;
     }
 }
+
+export const findLatest = async () => {
+    try {
+    const shoes = await Model.findAll({
+      limit: 3,
+      order: [['id', 'DESC']], // usa el autoincremental para simular "últimos"
+      include: [
+        { association: 'brand' },
+        { association: 'categories' },
+        { association: 'stocks' },
+        { association: 'files' }
+      ]
+    });
+    return shoes;
+  } catch (error) {
+    console.log('error finding last 3 models');
+    console.log(error);
+    return [];
+  }
+}

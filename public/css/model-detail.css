@@ -197,7 +197,14 @@
   touch-action: pan-y;      /* dejamos el scroll vertical libre; capturamos horizontal */
   user-select: none;
   -webkit-user-drag: none;
-}
+}/* permitir scroll vertical del usuario sobre el carrusel */
+  .slides, .slide { touch-action: pan-y; }
+
+  /* evitar rebotes laterales, pero dejar pasar el scroll vertical */
+  .slides {
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
+  }
 
 
 

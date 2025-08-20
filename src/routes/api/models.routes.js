@@ -4,6 +4,7 @@ import multerMiddleware from '../../middlewares/multer.middleware.js';
 const router = express.Router();
 
 router.get('/category', modelsController.getAll)
+router.get('/latest', modelsController.getLatest)
 router.get('/:modelId', modelsController.getOne)
 router.post('/',  multerMiddleware.array('images'), modelsController.create);
 router.delete('/:shoeId', modelsController.delete)
