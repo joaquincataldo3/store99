@@ -5,6 +5,7 @@ export default (sequelize, dataTypes) => {
     id: {
       type: dataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false,
     },
     username: { type: dataTypes.STRING(255) },

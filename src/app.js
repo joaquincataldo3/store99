@@ -13,6 +13,7 @@ import modelsRouter from './routes/api/models.routes.js';
 import sizesRouter from './routes/api/sizes.routes.js';
 import categoriesController from './routes/api/categories.routes.js';
 import stocksController from './routes/api/stocks.routes.js';
+import filesRouter from './routes/api/files.routes.js';
 import dotenv from "dotenv";
 dotenv.config();
 const MemoryStore = memorystore(session);
@@ -61,6 +62,7 @@ app.use('/api/model', modelsRouter)
 app.use('/api/size', sizesRouter)
 app.use('/api/category', categoriesController)
 app.use('/api/stock', stocksController)
+app.use('/api/file', filesRouter)
 
 const PORT = process.env.PORT || 3500;
 

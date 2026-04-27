@@ -21,7 +21,11 @@ const config = {
     "password": process.env.PASSWORD || null,
     "database": process.env.DATABASE,
     "host": process.env.HOST,
+<<<<<<< HEAD
     "port": process.env.MYSQL_PORT,
+=======
+    "port": process.env.DB_PORT,
+>>>>>>> dev
     "dialect": "mysql"
   }
 }

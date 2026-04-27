@@ -1,6 +1,6 @@
 import { findAll, findStockByModel, syncStockSizes } from "../../helpers/stock.js";
 import { getFilesFromDbByShoeId } from "../../helpers/file.js";
-import { getS3PublicUrl } from "../../helpers/aws.js";
+import { getCloudinaryUrl } from "../../helpers/cloudinary.js";
 
 const controller = {
     getStockByModel: async (req, res) => {
@@ -48,9 +48,9 @@ const controller = {
 
                 const filesWithUrls = await Promise.all(
                     filesFromDb.map(async file => {
-                        const regularUrl = await getS3PublicUrl(file.filename || file.regular_filename);
-                        const thumbUrl = file.main_file && file.thumb_filename
-                        ? await getS3PublicUrl(file.thumb_filename)
+                        const regularUrl = getCloudinaryUrl(file.regular_filename);
+                        const thumbUrl = file.main_file
+                        ? getCloudinaryUrl(file.regular_filename, { thumb: true })
                         : null;
 
                         return {

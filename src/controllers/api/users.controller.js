@@ -2,7 +2,6 @@ import { getMappedErrors } from "../../helpers/errors.js";
 import { findByEmail, insertInDb } from "../../helpers/user.js";
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken'
-import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
 
 const controller = {
@@ -18,7 +17,7 @@ const controller = {
                     params: errorsParams,
                 });
             }
-            const { email, password } = req.body;
+            const { email, password, username } = req.body;
             const sanitizedEmail = email.toLowerCase();
 
             const userExists = await findByEmail(sanitizedEmail);
@@ -39,7 +38,6 @@ const controller = {
             const sanitizedUsername = username.toLowerCase();
 
             const userDataToDB = {
-                id: uuidv4(),
                 username: sanitizedUsername,
                 email: sanitizedEmail,
                 password: bcrypt.hashSync(password, 10),

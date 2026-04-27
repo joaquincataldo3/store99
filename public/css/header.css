@@ -2,7 +2,8 @@ header {
   width: 100%;
   background-color: white;
   box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-  position: block;
+  position: relative;
+  z-index: 100;
   
 }
 
@@ -26,7 +27,7 @@ header {
   list-style: none;
 }
 
-.nav-links-desktop li a, .nav-link {
+.nav-links-desktop li a, .nav-links-desktop li span, .nav-link {
   text-decoration: none;
   color: black;
   font-weight: 500;

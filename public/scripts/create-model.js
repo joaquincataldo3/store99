@@ -154,6 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const result = await res.json();
+    console.log('res')
+    console.log(res)
 
     if (!res.ok) throw new Error(result.msg || 'Error al crear el modelo');
 

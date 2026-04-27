@@ -96,17 +96,72 @@ function initInfiniteSlider({ sliderId, dotsId, desktop = false }) {
   // Si cambia breakpoint, ajustar delay
   mqlDesktop.addEventListener?.('change', restart);
 
-  // Bloquear cualquier intento de interacción del usuario (opcional)
-  const block = (e) => e.preventDefault();
-  slider.addEventListener('wheel', block, { passive: false });
-  slider.addEventListener('keydown', block);
-  slider.addEventListener('pointerdown', block);
 
   return { start, stop };
 }
 
-// INIT: mobile + desktop (corre el visible; el otro queda pausado por IO/breakpoint)
-window.addEventListener('DOMContentLoaded', () => {
-  initInfiniteSlider({ sliderId: 'heroSlidesMobile',  dotsId: 'heroDotsMobile',  desktop: false });
-  initInfiniteSlider({ sliderId: 'heroSlidesDesktop', dotsId: 'heroDotsDesktop', desktop: true  });
+const loadLatestModels = async () => {
+   try {
+    const res = await fetch('/api/model/latest');
+    const resJson = await res.json();
+    const models = resJson.data;
+    const shoeList = document.getElementById('shoe-list');
+
+    models.forEach(modelData => {
+      const card = document.createElement('a');
+      card.classList.add('card');
+      card.href = `/modelo/${modelData.id}`;
+
+      const mainImage = modelData.files?.find(f => f.thumb !== null)?.thumb;
+      console.log(modelData.files)
+
+      card.innerHTML = `
+        <img src="${mainImage}" alt="${modelData.name}">
+        <div class="card-body">
+          <div class="brand">${modelData.brand?.name || 'Sin marca'}</div>
+          <div class="model">${modelData.name}</div>
+          <div class="color">${modelData.color}</div>
+        </div>
+      `;
+
+      shoeList.appendChild(card);
+    });
+  } catch (err) {
+    console.log(err);
+    shoeList.innerHTML = `<p>Error al cargar los modelos.</p>`;
+  }
+}
+
+function initBrandsSlider() {
+  const track = document.getElementById('brandsTrack');
+  const prev = document.querySelector('.brands-prev');
+  const next = document.querySelector('.brands-next');
+  if (!track || !prev || !next) return;
+
+  const items = track.querySelectorAll('.brand-item');
+  const total = items.length;
+  let index = 0;
+
+  function visibleCount() {
+    return window.innerWidth < 600 ? 2 : 4;
+  }
+
+  function update() {
+    const max = total - visibleCount();
+    if (index < 0) index = max;
+    if (index > max) index = 0;
+    const itemWidth = 100 / visibleCount();
+    track.style.transform = `translateX(-${index * itemWidth}%)`;
+  }
+
+  prev.addEventListener('click', () => { index--; update(); });
+  next.addEventListener('click', () => { index++; update(); });
+  window.addEventListener('resize', update);
+  update();
+}
+
+window.addEventListener('DOMContentLoaded', async () => {
+  initInfiniteSlider({ sliderId: 'heroSlides', dotsId: 'heroDots' });
+  initBrandsSlider();
+  await loadLatestModels();
 });

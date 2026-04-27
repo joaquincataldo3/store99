@@ -93,6 +93,66 @@
   color: #666;
 }
 
+.sizes-section {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sizes-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sizes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.size-tag {
+  padding: 6px 12px;
+  border: 1.5px solid #222;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.delivery-time {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1.25rem;
+  padding: 14px;
+  background-color: #25d366;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+  background-color: #1ebe5d;
+}
+
+.whatsapp-btn .bxl-whatsapp {
+  font-size: 1.3rem;
+}
+
 .copy {
   font-size: 0.9rem;
   color: black;
@@ -145,7 +205,7 @@
   .action-btn {
   display: inline-block;
   padding: 8px 14px;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
   text-decoration: none;
   border-radius: 5px;
@@ -172,13 +232,13 @@
 @media (min-width: 900px) {
   .main-container {
     width: 100%;
-    max-width: 1500px;
+    max-width: 1100px;
     margin: auto;
     padding: 2rem;
     display: flex;
     flex-direction: row;
     gap: 2rem;
-    max-height: 900px;
+    max-height: 700px;
   }
 
 .carousel-container {
@@ -197,7 +257,14 @@
   touch-action: pan-y;      /* dejamos el scroll vertical libre; capturamos horizontal */
   user-select: none;
   -webkit-user-drag: none;
-}
+}/* permitir scroll vertical del usuario sobre el carrusel */
+  .slides, .slide { touch-action: pan-y; }
+
+  /* evitar rebotes laterales, pero dejar pasar el scroll vertical */
+  .slides {
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
+  }
 
 
 
@@ -224,7 +291,8 @@
 .actions-buttons {
   display: flex;
   gap: 10px;
-  margin-top: 15px;
+  margin: 0 auto;
+  justify-content: center;
 }
 
 
@@ -275,6 +343,10 @@
   .copy li {
     font-size: 12px;
     margin-bottom: 25px;
+  }
+
+  .sizes-section {
+    align-items: flex-start;
   }
 
  
@@ -351,19 +423,19 @@
   }
 
   .brand {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
   }
 
   .model-name {
-    font-size: 2.4rem;
+    font-size: 2rem;
   }
 
   .color {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 
   .copy li {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
