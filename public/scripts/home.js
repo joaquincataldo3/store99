@@ -96,11 +96,6 @@ function initInfiniteSlider({ sliderId, dotsId, desktop = false }) {
   // Si cambia breakpoint, ajustar delay
   mqlDesktop.addEventListener?.('change', restart);
 
-  // Bloquear cualquier intento de interacción del usuario (opcional)
-  const block = (e) => e.preventDefault();
-  slider.addEventListener('wheel', block, { passive: false });
-  slider.addEventListener('keydown', block);
-  slider.addEventListener('pointerdown', block);
 
   return { start, stop };
 }
@@ -137,9 +132,36 @@ const loadLatestModels = async () => {
   }
 }
 
-// INIT: mobile + desktop (corre el visible; el otro queda pausado por IO/breakpoint)
+function initBrandsSlider() {
+  const track = document.getElementById('brandsTrack');
+  const prev = document.querySelector('.brands-prev');
+  const next = document.querySelector('.brands-next');
+  if (!track || !prev || !next) return;
+
+  const items = track.querySelectorAll('.brand-item');
+  const total = items.length;
+  let index = 0;
+
+  function visibleCount() {
+    return window.innerWidth < 600 ? 2 : 4;
+  }
+
+  function update() {
+    const max = total - visibleCount();
+    if (index < 0) index = max;
+    if (index > max) index = 0;
+    const itemWidth = 100 / visibleCount();
+    track.style.transform = `translateX(-${index * itemWidth}%)`;
+  }
+
+  prev.addEventListener('click', () => { index--; update(); });
+  next.addEventListener('click', () => { index++; update(); });
+  window.addEventListener('resize', update);
+  update();
+}
+
 window.addEventListener('DOMContentLoaded', async () => {
-  initInfiniteSlider({ sliderId: 'heroSlidesMobile',  dotsId: 'heroDotsMobile',  desktop: false });
-  initInfiniteSlider({ sliderId: 'heroSlidesDesktop', dotsId: 'heroDotsDesktop', desktop: true  });
+  initInfiniteSlider({ sliderId: 'heroSlides', dotsId: 'heroDots' });
+  initBrandsSlider();
   await loadLatestModels();
 });

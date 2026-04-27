@@ -44,14 +44,31 @@
           <p class="color"><%= model.color.charAt(0).toUpperCase() + model.color.slice(1) %></p>
         </div>
       
+        <% if (model.stocks && model.stocks.length > 0) { %>
+        <div class="sizes-section">
+          <p class="sizes-label">Talles disponibles entrega inmediata</p>
+          <div class="sizes-grid">
+            <% model.stocks.forEach(size => { %>
+              <span class="size-tag"><%= size.us_size %></span>
+            <% }) %>
+          </div>
+        </div>
+        <% } %>
+
+        <p class="delivery-time">⏱ Si no hay stock, demora 25-30 días por encargue</p>
+
         <ul class="copy" type="none">
-          <li><i class='bx  bx-square'  ></i> Consultanos disponibilidad</li>
-          <li><i class='bx  bx-square'  ></i> Distintas formas de pago</li>
-          <li><i class='bx  bx-square'  ></i> Envíos a todo el país</li>
-          <li><i class='bx  bx-square'  ></i> Chequeá las reviews <a href="https://weartesters.com/"><img class="wear" src="/assets/wear.png" alt=""></a></p>
+          <li><i class='bx bx-square'></i> Consultar otros talles por encargue</li>
+          <li><i class='bx bx-square'></i> Distintas formas de pago</li>
+          <li><i class='bx bx-square'></i> Envíos a todo el país</li>
+          <li><i class='bx bx-square'></i> Chequeá las reviews <a href="https://weartesters.com/" target="_blank" rel="noopener"><img class="wear" src="/assets/wear.png" alt="Wear Testers"></a></li>
         </ul>
 
-       
+        <a class="whatsapp-btn" target="_blank" rel="noopener"
+          href="https://wa.me/<%= whatsappNumber %>?text=<%= encodeURIComponent('Hola! Consulto por ' + model.name.toUpperCase() + ' ' + model.color) %>">
+          <i class='bx bxl-whatsapp'></i> Consultar por WhatsApp
+        </a>
+
       </section>
     </main>
 

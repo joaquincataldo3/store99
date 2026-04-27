@@ -1,39 +1,57 @@
 window.addEventListener('DOMContentLoaded', () => {
-    checkForRegisterSubmit();
-})
-
-const checkForRegisterSubmit = () => {
     const form = document.getElementById('sign-in-form');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        validateFormDataAndFetch(form);
-    })
-}
+        handleSubmit(form);
+    });
+});
 
-const validateFormDataAndFetch = async (form) => {
+const handleSubmit = async (form) => {
     const inputs = form.querySelectorAll('.form-input');
-    let isValidForm = true;
-    let fetchData = {}
+    const errorMsg = form.querySelector('.error-msg');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    let isValid = true;
+    let fetchData = {};
+
     inputs.forEach(inp => {
-        inp.classList.remove('input-error')
-        if(!inp.value) {
-            inp.classList.add('input-error')
-            isValidForm = false;
+        inp.classList.remove('input-error');
+        if (!inp.value) {
+            inp.classList.add('input-error');
+            isValid = false;
         } else {
-            fetchData[inp.name] = inp.value
+            fetchData[inp.name] = inp.value;
         }
-    })
-    if(!isValidForm) return;
-    const response = await fetch('/api/user/sign-in', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(fetchData)
-    })
-    const jsonResponse = await response.json();
-    const {ok, msg} = jsonResponse;
-    if(!ok){
-        const errorMsgElement = document.querySelector('.error-msg');
-        errorMsgElement.innerText = msg;
-        return;
+    });
+
+    if (!isValid) return;
+
+    setLoading(submitBtn, true);
+    errorMsg.textContent = '';
+
+    try {
+        const response = await fetch('/api/user/sign-in', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(fetchData)
+        });
+
+        const { ok, msg } = await response.json();
+
+        if (!ok) {
+            errorMsg.textContent = msg || 'Credenciales inválidas';
+            return;
+        }
+
+        window.location.href = '/';
+    } catch {
+        errorMsg.textContent = 'Error de conexión';
+    } finally {
+        setLoading(submitBtn, false);
     }
-}
+};
+
+const setLoading = (btn, loading) => {
+    btn.disabled = loading;
+    btn.classList.toggle('loading', loading);
+};

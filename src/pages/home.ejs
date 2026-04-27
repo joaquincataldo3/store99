@@ -11,25 +11,8 @@
 <body>
     <%- include ('partials/header') %>
   <main>
-<!-- === MOBILE SLIDER (visible <1024px) === -->
-<div class="carousel carousel--mobile" id="heroCarouselMobile" aria-roledescription="carousel" aria-label="Destacados mobile">
-  <div class="slides" id="heroSlidesMobile" aria-live="polite">
-    <div class="slide" role="group" aria-label="Slide 1 de 3">
-      <img src="/assets/banner-mobile1.png" alt="Zapatillas exclusivas Nike" loading="eager" />
-    </div>
-    <div class="slide" role="group" aria-label="Slide 2 de 3">
-      <img src="/assets/banner-mobile2.png" alt="Adidas Harden Vol. 8" loading="lazy" />
-    </div>
-    <div class="slide" role="group" aria-label="Slide 3 de 3">
-      <img src="/assets/banner-mobile3.png" alt="Li-Ning Way of Wade 11" loading="lazy" />
-    </div>
-  </div>
-  <div class="dots" id="heroDotsMobile" aria-hidden="false"></div>
-</div>
-
-<!-- === DESKTOP SLIDER (visible ≥1024px) === -->
-<div class="carousel carousel--desktop" id="heroCarouselDesktop" aria-roledescription="carousel" aria-label="Destacados desktop">
-  <div class="slides" id="heroSlidesDesktop" aria-live="polite">
+<div class="carousel" id="heroCarousel" aria-roledescription="carousel" aria-label="Destacados">
+  <div class="slides" id="heroSlides" aria-live="polite">
     <div class="slide" role="group" aria-label="Slide 1 de 3">
       <img src="/assets/banner1.png" alt="Zapatillas exclusivas Nike" loading="eager" />
     </div>
@@ -40,7 +23,7 @@
       <img src="/assets/banner3.png" alt="Li-Ning Way of Wade 11" loading="lazy" />
     </div>
   </div>
-  <div class="dots" id="heroDotsDesktop" aria-hidden="false"></div>
+  <div class="dots" id="heroDots" aria-hidden="false"></div>
 </div>
 
 
@@ -72,10 +55,65 @@
       </div>
     </section>
     
+    <section class="brands-slider">
+      <button class="brands-arrow brands-prev" aria-label="Anterior">
+        <img src="/assets/arrow-right.png" alt="" class="arrow-flipped">
+      </button>
+      <div class="brands-viewport">
+        <div class="brands-track" id="brandsTrack">
+          <div class="brand-item"><img src="/assets/nike-logo.png" alt="Nike"></div>
+          <div class="brand-item"><img src="/assets/adidas-logo.png" alt="Adidas"></div>
+          <div class="brand-item"><img src="/assets/under-armour-logo.png" alt="Under Armour"></div>
+          <div class="brand-item"><img src="/assets/puma-logo.png" alt="Puma"></div>
+          <div class="brand-item"><img src="/assets/anta-logo.png" alt="Anta"></div>
+          <div class="brand-item"><img src="/assets/lining-logo.png" alt="Li-Ning"></div>
+        </div>
+      </div>
+      <button class="brands-arrow brands-next" aria-label="Siguiente">
+        <img src="/assets/arrow-right.png" alt="">
+      </button>
+    </section>
+
     <section class="shoe-grid latest" id="shoe-list">
       <p class="latest-label">Últimas publicadas</p>
     </section>
    
+    <section class="novedades">
+      <h2 class="novedades-title">Novedades</h2>
+
+      <article class="novedad-card novedad-dark">
+        <div class="novedad-img-wrap">
+          <img src="/assets/ja3byyou.png" alt="Nike JA 3 By You">
+        </div>
+        <div class="novedad-body">
+          <p class="novedad-label">Nike By You</p>
+          <h3 class="novedad-name">JA 3 By You</h3>
+          <p class="novedad-desc">
+            La zapatilla de Ja Morant, ahora con tu firma. Elegí cada color, cada material, cada detalle — desde los cordones hasta la suela. Una JA 3 que no va a tener nadie más.
+          </p>
+          <a class="novedad-btn" href="https://wa.me/<%= locals.whatsappNumber || '' %>?text=<%= encodeURIComponent('Hola! Consulto por la JA 3 By You') %>" target="_blank" rel="noopener">
+            Consultar por WhatsApp
+          </a>
+        </div>
+      </article>
+
+      <article class="novedad-card novedad-light">
+        <div class="novedad-img-wrap">
+          <img src="/assets/sabrina3byyou.png" alt="Nike Sabrina 3 By You">
+        </div>
+        <div class="novedad-body">
+          <p class="novedad-label">Nike By You</p>
+          <h3 class="novedad-name">Sabrina 3 By You</h3>
+          <p class="novedad-desc">
+            La firma de Sabrina Ionescu, personalizable de punta a punta. Combiná la base, el Swoosh y los detalles a tu gusto. Hecha para la cancha, diseñada por vos.
+          </p>
+          <a class="novedad-btn" href="https://wa.me/<%= locals.whatsappNumber || '' %>?text=<%= encodeURIComponent('Hola! Consulto por la Sabrina 3 By You') %>" target="_blank" rel="noopener">
+            Consultar por WhatsApp
+          </a>
+        </div>
+      </article>
+    </section>
+
     <%- include ('partials/footer') %>
 
 </body>

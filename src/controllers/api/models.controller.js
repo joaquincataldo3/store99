@@ -1,7 +1,7 @@
 import { deleteFilesFromDbByShoeId, filterFiles, getFilesFromDbByShoeId, handleModelFiles, insertFilesInDb } from "../../helpers/file.js";
 import { deleteModelById, findAllModelsByCategory, findLatest, findModelById, findModelByNameAndColor, insertModelInDb } from "../../helpers/model.js";
 import { findBrandById } from "../../helpers/brand.js";
-import { deleteFilesFromS3, getS3PublicUrl} from "../../helpers/aws.js";
+import { deleteFilesFromCloudinary, getCloudinaryUrl } from "../../helpers/cloudinary.js";
 import { insertCategoriesWithModelId } from "../../helpers/category.js";
 
 const controller = {
@@ -23,9 +23,9 @@ const controller = {
 
             const filesWithUrls = await Promise.all(
                 filesFromDb.map(async file => {
-                const regularUrl = await getS3PublicUrl(file.filename || file.regular_filename);
-                const thumbUrl = file.main_file && file.thumb_filename
-                    ? await getS3PublicUrl(file.thumb_filename)
+                const regularUrl = getCloudinaryUrl(file.regular_filename);
+                const thumbUrl = file.main_file
+                    ? getCloudinaryUrl(file.regular_filename, { thumb: true })
                     : null;
 
                 return {
@@ -82,10 +82,9 @@ const controller = {
 
             const filesWithUrls = await Promise.all(
             filesFromDb.map(async (file) => {
-                const regularUrl = await getS3PublicUrl(file.filename || file.regular_filename);
-                const thumbUrl =
-                file.main_file && file.thumb_filename
-                    ? await getS3PublicUrl(file.thumb_filename)
+                const regularUrl = getCloudinaryUrl(file.regular_filename);
+                const thumbUrl = file.main_file
+                    ? getCloudinaryUrl(file.regular_filename, { thumb: true })
                     : null;
 
                 return {
@@ -125,7 +124,7 @@ const controller = {
             color = color.toLowerCase();
 
             const multerFiles = req.files;
-            const areInvalidFiles = filterFiles(multerFiles);
+            const areInvalidFiles = await filterFiles(multerFiles);
 
             if(areInvalidFiles){
                 return res.status(400).json({
@@ -235,7 +234,7 @@ const controller = {
                     ok: false
                 })
             }
-            const areFilesSuccessfullyDeletedFromAws = await deleteFilesFromS3(files);
+            const areFilesSuccessfullyDeletedFromAws = await deleteFilesFromCloudinary(files);
             if(!areFilesSuccessfullyDeletedFromAws){
                 return res.status(500).json({
                     msg: 'internal server error',
@@ -272,9 +271,9 @@ const controller = {
 
                 const filesWithUrls = await Promise.all(
                     filesFromDb.map(async file => {
-                    const regularUrl = await getS3PublicUrl(file.filename || file.regular_filename);
-                    const thumbUrl = file.main_file && file.thumb_filename
-                        ? await getS3PublicUrl(file.thumb_filename)
+                    const regularUrl = getCloudinaryUrl(file.regular_filename);
+                    const thumbUrl = file.main_file
+                        ? getCloudinaryUrl(file.regular_filename, { thumb: true })
                         : null;
 
                     return {

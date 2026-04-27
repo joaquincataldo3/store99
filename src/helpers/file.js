@@ -1,9 +1,9 @@
-import { uploadFile } from "./aws.js";
+import { uploadFile } from "./cloudinary.js";
 import db from "../database/models/index.js";
 import sharp from "sharp";
 const { File } = db;
 
-const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+const allowedFormats = ['jpeg', 'png', 'webp', 'avif'];
 
 export const handleModelFiles = async (files, frontendMetadata = []) => {
   try {
@@ -13,25 +13,17 @@ export const handleModelFiles = async (files, frontendMetadata = []) => {
       const file = files[i];
       const meta = frontendMetadata[i];
 
-      // Comprimir imagen principal (grande)
-      const compressedImage = await compressImage(file);
-      const key = meta.filename;
-      const fileKey = await uploadFile(compressedImage, key, 'image/webp');
+      // Strip extension — Cloudinary uses public_id without extension
+      const publicId = meta.filename.replace(/\.[^/.]+$/, '');
+      const storedPublicId = await uploadFile(file.buffer, publicId);
+      console.log('uploaded')
+      console.log(storedPublicId)
 
-      const fileEntry = {
-        regular_filename: fileKey,
-        main_file: meta.main_file
-      };
-
-      // Si es la imagen principal, generar thumb
-      if (meta.main_file) {
-        const thumbKey = key.replace(/(\.jpg|\.jpeg|\.png)$/i, '_thumb$1');
-        const thumbImage = await compressImage(file, 600); 
-        const thumbFileKey = await uploadFile(thumbImage, thumbKey, 'image/webp');
-        fileEntry.thumb_filename = thumbFileKey;
-      }
-
-      keys.push(fileEntry);
+      keys.push({
+        regular_filename: storedPublicId,
+        thumb_filename: null,
+        main_file: meta.main_file,
+      });
     }
 
     return keys;
@@ -62,51 +54,39 @@ export const insertFilesInDb = async (files, modelId) => {
   }
 };
 
-
-export const compressImage = async (file, width = 1200) => {
-  if (!file || !file.buffer) {
-    throw new Error('Invalid file buffer');
+export const filterFiles = async (files) => {
+  for (const file of files) {
+    try {
+      const { format } = await sharp(file.buffer).metadata();
+      if (!allowedFormats.includes(format)) return true;
+    } catch {
+      return true;
+    }
   }
-
-  return await sharp(file.buffer)
-    .resize({ width, withoutEnlargement: true })
-    .jpeg({ quality: 85, mozjpeg: true })
-    .toBuffer();
+  return false;
 };
 
-
-export const filterFiles = (files) => {
-    const invalidFiles = files.filter(file => !allowedTypes.includes(file.mimetype));
-    return invalidFiles.length > 0
-}
-
 export const getFilesFromDbByShoeId = async (shoeId) => {
-    try {
-        const files = await File.findAll({
-            where: {
-                model_id: shoeId
-            }
-        })
-
-        return files;
-    } catch (error) {
-        console.log('error obtaining files');
-        return null;
-    }
-}
+  try {
+    const files = await File.findAll({
+      where: { model_id: shoeId }
+    });
+    return files;
+  } catch (error) {
+    console.log('error obtaining files');
+    return null;
+  }
+};
 
 export const deleteFilesFromDbByShoeId = async (shoeId) => {
-    try {
-        await File.destroy({
-            where: {
-                model_id: shoeId
-            }
-        })
-        return true;
-    } catch (error) {
-        console.log('error')
-        console.log(error)
-        return false;
-    }
-}
-
+  try {
+    await File.destroy({
+      where: { model_id: shoeId }
+    });
+    return true;
+  } catch (error) {
+    console.log('error');
+    console.log(error);
+    return false;
+  }
+};
