@@ -72,6 +72,9 @@ const controller = {
     uploadFormaComprar: (req, res) => {
         return res.render('upload-forma-comprar');
     },
+    quienesSomos: (req, res) => {
+        return res.render('quienes-somos');
+    },
 }
 
 export default controller;

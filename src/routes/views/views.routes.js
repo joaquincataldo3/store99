@@ -8,6 +8,7 @@ router.get('/inicio-sesion', viewsController.signIn);
 router.get('/zapatillas-encargue', viewsController.modelsList);
 router.get('/modelo/:shoeId', viewsController.modelDetail);
 router.get('/forma-comprar', viewsController.formaComprar);
+router.get('/quienes-somos', viewsController.quienesSomos);
 
 router.get('/registro', checkUserAuth, viewsController.register);
 router.get('/crear-modelo', checkUserAuth, viewsController.createModel);

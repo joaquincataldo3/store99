@@ -7,8 +7,6 @@ import { fileURLToPath, pathToFileURL } from 'url';
 
 const env = process.env.NODE_ENV || 'development';
 const config = configData[env];
-console.log('config')
-console.log(config)
 
 // Reemplazo de __dirname en ES modules
 const __filename = fileURLToPath(import.meta.url);

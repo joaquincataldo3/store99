@@ -14,7 +14,10 @@
 <div class="carousel" id="heroCarousel" aria-roledescription="carousel" aria-label="Destacados">
   <div class="slides" id="heroSlides" aria-live="polite">
     <div class="slide" role="group" aria-label="Slide 1 de 3">
-      <img src="/assets/banner1.png" alt="Zapatillas exclusivas Nike" loading="eager" />
+      <picture>
+        <source media="(max-width: 767px)" srcset="/assets/banner1_mobile.jpg">
+        <img src="/assets/banner1.png" alt="Zapatillas exclusivas Nike" loading="eager" />
+      </picture>
     </div>
     <div class="slide" role="group" aria-label="Slide 2 de 3">
       <img src="/assets/banner2.png" alt="Adidas Harden Vol. 8" loading="lazy" />
@@ -33,22 +36,17 @@
     <section class="value-props">
       <div class="props-container props-grid">
         <article class="prop">
-          <div class="prop-ico" aria-hidden>🇺🇸</div>
-          <h3>Exclusivas de USA</h3>
-          <p>Modelos y colorways que no se consiguen acá. Pedido bajo demanda.</p>
-        </article>
-        <article class="prop">
-          <div class="prop-ico" aria-hidden>✅</div>
+          <div class="prop-ico" aria-hidden><img class="home-icon" src="/assets/2.png" alt=""></div>
           <h3>Autenticidad garantizada</h3>
-          <p>Trabajamos con retailers oficiales y chequeos de calidad en origen.</p>
+          <p>Trabajamos con retailers oficiales y chequeos de calidad en origen en USA.</p>
         </article>
         <article class="prop">
-          <div class="prop-ico" aria-hidden>🚚</div>
+          <div class="prop-ico" aria-hidden><img class="home-icon" src="/assets/1.png" alt=""></div>
           <h3>Envío a todo el país</h3>
           <p>Seguimiento puerta a puerta y embalaje protegido.</p>
         </article>
         <article class="prop">
-          <div class="prop-ico" aria-hidden>💬</div>
+          <div class="prop-ico" aria-hidden><img class="home-icon" src="/assets/3.png" alt=""></div>
           <h3>Asesoría personalizada</h3>
           <p>Te ayudamos a elegir talla y silueta según tu juego.</p>
         </article>

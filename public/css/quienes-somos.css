@@ -1,0 +1,84 @@
+.about-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.about-hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.about-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+}
+
+.about-tagline {
+  font-size: 1rem;
+  color: var(--light-red);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.about-desc {
+  background: #f5f5f5;
+  border-left: 4px solid var(--light-red);
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 2.5rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.about-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.about-card {
+  background: #fff;
+  border: 1px solid var(--light-grey);
+  border-radius: 10px;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+
+.about-card:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.about-card i {
+  font-size: 2rem;
+  color: var(--light-red);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+.about-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: #1a1a2e;
+}
+
+.about-card p {
+  font-size: 0.9rem;
+  color: var(--heavy-grey);
+}
+
+@media (min-width: 640px) {
+  .about-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .about-title {
+    font-size: 2.4rem;
+  }
+}
