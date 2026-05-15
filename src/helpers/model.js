@@ -15,7 +15,8 @@ export const findAllModelsByCategory = async (categoryId) => {
             {
                 association: 'category'
             }
-    ]
+    ],
+    order: [['model_id', 'DESC']]
   });
 };
 
