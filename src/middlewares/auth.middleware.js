@@ -3,19 +3,21 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 export const checkUserAuth = (req, res, next) => {
-  try {
-    
-    const token = req.cookies?.userAccessToken;
-    if (!token) {
-      return res.status(401).json({ ok: false, msg: 'Unauthorized' });
-    }
+  const isApiRequest = req.originalUrl.startsWith('/api') || req.xhr || req.headers.accept?.includes('application/json');
 
-    const decoded = jwt.verify(token, process.env.JSONWEBTOKEN_SECRET); 
+  const reject = () => {
+    if (isApiRequest) return res.status(401).json({ ok: false, msg: 'Unauthorized' });
+    return res.redirect('/inicio-sesion');
+  };
+
+  try {
+    const token = req.cookies?.userAccessToken;
+    if (!token) return reject();
+
+    const decoded = jwt.verify(token, process.env.JSONWEBTOKEN_SECRET);
     req.user = decoded;
     return next();
-    
   } catch (err) {
-    console.error('Auth error:', err.message);
-    return res.status(401).json({ ok: false, msg: 'Invalid or expired token' });
+    return reject();
   }
 };
