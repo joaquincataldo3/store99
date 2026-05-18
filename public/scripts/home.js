@@ -161,6 +161,7 @@ function initBrandsSlider() {
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
+  initInfiniteSlider({ sliderId: 'heroSlidesMobile', dotsId: 'heroDotsMobile' });
   initInfiniteSlider({ sliderId: 'heroSlides', dotsId: 'heroDots' });
   initBrandsSlider();
   await loadLatestModels();

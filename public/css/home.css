@@ -4,6 +4,8 @@ img { display:block; max-width:100%; }
 
 .hero { padding: 12px 0 28px; }
 .carousel { position: relative; border-radius: var(--radius); overflow: hidden; background: #0e0f12; }
+.carousel--desktop { display: none; }
+@media (min-width: 768px) { .carousel--mobile { display: none; } .carousel--desktop { display: block; } }
 .slides { display:flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
 .slides::-webkit-scrollbar{ display: none; }
 .slide {

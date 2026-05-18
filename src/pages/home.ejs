@@ -11,19 +11,27 @@
 <body>
     <%- include ('partials/header') %>
   <main>
-<div class="carousel" id="heroCarousel" aria-roledescription="carousel" aria-label="Destacados">
+<!-- Mobile carousel: 2 slides -->
+<div class="carousel carousel--mobile" id="heroCarouselMobile" aria-roledescription="carousel" aria-label="Destacados">
+  <div class="slides" id="heroSlidesMobile" aria-live="polite">
+    <div class="slide" role="group" aria-label="Slide 1 de 2">
+      <img src="/assets/banner1_mobile.jpg" alt="Zapatillas exclusivas Nike" loading="eager" />
+    </div>
+    <div class="slide" role="group" aria-label="Slide 2 de 2">
+      <img src="/assets/img-2-slider.png" alt="Adidas Harden Vol. 8" loading="lazy" />
+    </div>
+  </div>
+  <div class="dots" id="heroDotsMobile" aria-hidden="false"></div>
+</div>
+
+<!-- Desktop carousel: 3 slides -->
+<div class="carousel carousel--desktop" id="heroCarousel" aria-roledescription="carousel" aria-label="Destacados">
   <div class="slides" id="heroSlides" aria-live="polite">
     <div class="slide" role="group" aria-label="Slide 1 de 3">
-      <picture>
-        <source media="(max-width: 767px)" srcset="/assets/banner1_mobile.jpg">
-        <img src="/assets/banner1.png" alt="Zapatillas exclusivas Nike" loading="eager" />
-      </picture>
+      <img src="/assets/banner1.png" alt="Zapatillas exclusivas Nike" loading="eager" />
     </div>
     <div class="slide" role="group" aria-label="Slide 2 de 3">
-      <picture>
-        <source media="(max-width: 767px)" srcset="/assets/img-2-slider.png">
-        <img src="/assets/banner2.png" alt="Adidas Harden Vol. 8" loading="lazy" />
-      </picture>
+      <img src="/assets/banner2.png" alt="Adidas Harden Vol. 8" loading="lazy" />
     </div>
     <div class="slide" role="group" aria-label="Slide 3 de 3">
       <img src="/assets/banner3.png" alt="Li-Ning Way of Wade 11" loading="lazy" />
