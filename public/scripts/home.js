@@ -113,7 +113,6 @@ const loadLatestModels = async () => {
       card.href = `/modelo/${modelData.id}`;
 
       const mainImage = modelData.files?.find(f => f.thumb !== null)?.thumb;
-      console.log(modelData.files)
 
       card.innerHTML = `
         <img src="${mainImage}" alt="${modelData.name}">
