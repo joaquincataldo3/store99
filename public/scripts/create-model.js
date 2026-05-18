@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     for (const file of files) {
       const ext = file.name.split('.').pop().toLowerCase();
-      if (!['jpg', 'jpeg', 'png', 'webp'].includes(ext)) {
+      if (!['jpg', 'jpeg', 'png', 'webp', 'avif'].includes(ext)) {
         alert(`Extensión no válida para ${file.name}`);
         hasErrors = true;
         break;
@@ -154,9 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const result = await res.json();
-    console.log('res')
-    console.log(res)
-
     if (!res.ok) throw new Error(result.msg || 'Error al crear el modelo');
 
     alert('Modelo creado con éxito.');

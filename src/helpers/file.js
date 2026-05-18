@@ -3,7 +3,7 @@ import db from "../database/models/index.js";
 import sharp from "sharp";
 const { File } = db;
 
-const allowedFormats = ['jpeg', 'png', 'webp', 'avif'];
+const allowedFormats = ['jpeg', 'png', 'webp', 'avif', 'heif'];
 
 export const handleModelFiles = async (files, frontendMetadata = []) => {
   try {
