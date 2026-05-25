@@ -151,6 +151,7 @@ header {
 
 .mobile-submenu-link {
   font-size: 18px!important;
+  text-transform: uppercase;
 }
 
 /* Responsive rules */

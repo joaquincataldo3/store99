@@ -35,7 +35,7 @@ img { display:block; max-width:100%; }
 
 .value-props {
   background: #fafafa;
-  padding: 3rem 1rem;
+  padding: 0rem 1rem;
 }
 
 .props-grid {
@@ -93,7 +93,7 @@ img { display:block; max-width:100%; }
   font-size: 22px;
   color: #111;
   position: absolute;
-  left: 38px;
+  left: 12px;
   top: -25px;
   z-index: 1;
 }
@@ -229,8 +229,8 @@ img { display:block; max-width:100%; }
 }
 
 .home-icon {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
 }
 
 @media (min-width: 600px) {

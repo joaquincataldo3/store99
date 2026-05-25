@@ -5,6 +5,169 @@
   padding: 20px;
 }
 
+/* ── Filtros por marca ─────────────────────────────────── */
+.brand-filters {
+  margin-bottom: 20px;
+  padding: 0 12px;
+}
+
+/* ── Filter bar (wraps toggle + desktop dropdown) ── */
+.filter-bar {
+  position: relative;
+  display: inline-block;
+}
+
+/* ── Toggle button ── */
+.filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.filter-toggle:hover {
+  background: #333;
+  color: #fff;
+}
+
+.filter-toggle i {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.toggle-arrow {
+  transition: transform 0.25s ease;
+}
+
+.filter-toggle[aria-expanded="true"] .toggle-arrow {
+  transform: rotate(180deg);
+}
+
+/* ── Desktop dropdown ── */
+.filter-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 100;
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 220px;
+  box-shadow: 4px 4px 0 #333;
+}
+
+.filter-dropdown.open {
+  display: flex;
+}
+
+/* ── Shared pill button ── */
+.filter-btn {
+  padding: 8px 18px;
+  border: 2px solid #333;
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: background 0.2s ease, color 0.2s ease;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  background: #333;
+  color: white;
+}
+
+.filter-btn.active {
+  background: #333;
+  color: white;
+}
+
+/* ── Mobile / tablet popup overlay ── */
+.filter-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.45);
+  align-items: flex-end;
+}
+
+.filter-overlay.open {
+  display: flex;
+}
+
+.filter-popup {
+  width: 100%;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 1.25rem 1.25rem 2rem;
+  animation: slideUp 0.28s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.filter-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.filter-popup-header span {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter-popup-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.filter-popup-close i {
+  font-size: 24px;
+  color: #333;
+}
+
+.filter-popup-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  padding: 40px 0;
+}
+
+/* ───────────────────────────────────────────────────────── */
+
 .loader {
   width: 40px;
   height: 40px;

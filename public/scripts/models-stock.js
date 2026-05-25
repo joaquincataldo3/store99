@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const res = await fetch('/api/stock');
     const resJson = await res.json();
     stockItems = resJson.data;
+    console.log('stock')
+    console.log(stockItems)
 
     loader.style.display = 'none';
 

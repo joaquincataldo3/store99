@@ -15,8 +15,22 @@
         <h1 class="title">Zapatillas por encargue</h1>
         <h3 class="subtitle">Demora 25-30 días</h3>
       </div>
+      <div id="brand-filters" class="brand-filters"></div>
       <div class="loader" id="loader"></div>
       <div id="shoe-list" class="shoe-grid"></div>
+    </div>
+
+    <!-- Filter popup — mobile / tablet -->
+    <div class="filter-overlay" id="filterOverlay">
+      <div class="filter-popup">
+        <div class="filter-popup-header">
+          <span>Filtrar por marca</span>
+          <button class="filter-popup-close" id="filterPopupClose" aria-label="Cerrar">
+            <i class='bx bx-x'></i>
+          </button>
+        </div>
+        <div class="filter-popup-pills" id="filterPopupPills"></div>
+      </div>
     </div>
   </main>
 
