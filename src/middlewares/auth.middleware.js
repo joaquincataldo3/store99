@@ -7,7 +7,8 @@ export const checkUserAuth = (req, res, next) => {
 
   const reject = () => {
     if (isApiRequest) return res.status(401).json({ ok: false, msg: 'Unauthorized' });
-    return res.redirect('/inicio-sesion');
+    const returnTo = encodeURIComponent(req.originalUrl);
+    return res.redirect(`/inicio-sesion?returnTo=${returnTo}`);
   };
 
   try {

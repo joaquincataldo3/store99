@@ -43,7 +43,9 @@ const handleSubmit = async (form) => {
             return;
         }
 
-        window.location.href = '/';
+        const params = new URLSearchParams(window.location.search);
+        const returnTo = params.get('returnTo');
+        window.location.href = returnTo || '/';
     } catch {
         errorMsg.textContent = 'Error de conexión';
     } finally {
