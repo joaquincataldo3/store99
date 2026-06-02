@@ -7,6 +7,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.location.href = '/not-found';
     }
 
+    const categoryLabel = categoryId === '1' ? 'Adulto' : 'Niño';
+    const titleEl = document.querySelector('.title');
+    if (titleEl) titleEl.textContent = `Zapatillas por encargue · ${categoryLabel}`;
+
     const loader = document.getElementById('loader');
     const shoeList = document.getElementById('shoe-list');
     const brandFilters = document.getElementById('brand-filters');

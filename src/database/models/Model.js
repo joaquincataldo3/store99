@@ -11,7 +11,8 @@ export default (sequelize, dataTypes) => {
         },
         brand_id: { type: dataTypes.INTEGER},
         name: { type: dataTypes.STRING(255)},
-        color: { type: dataTypes.STRING(255)}
+        color: { type: dataTypes.STRING(255)},
+        available_for_order: { type: dataTypes.TINYINT, defaultValue: 1 }
     }
 
     let config = {

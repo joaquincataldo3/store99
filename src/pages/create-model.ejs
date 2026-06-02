@@ -44,8 +44,27 @@
             </div>
         </div>
 
+        <div class="form-group">
+          <label>Disponibilidad</label>
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" id="check_encargue" checked>
+              Por encargue
+            </label>
+            <label>
+              <input type="checkbox" id="check_stock">
+              En stock
+            </label>
+          </div>
+        </div>
 
-   
+        <div class="form-group" id="sizes-group" style="display:none">
+          <label>Talles en stock</label>
+          <div class="checkbox-grid" id="sizes-container">
+            <p class="loading-msg">Cargando talles...</p>
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="images">Imágenes</label>
           <input type="file" id="images" name="images" accept="image/*" multiple required>

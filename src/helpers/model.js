@@ -7,6 +7,7 @@ export const findAllModelsByCategory = async (categoryId) => {
     include: [
             {
                 association: 'model',
+                where: { available_for_order: 1 },
                 include: [
                 { association: 'brand' },
                 { association: 'files' }
@@ -70,13 +71,14 @@ export const findModelById = async (shoeId) => {
 
 export const insertModelInDb = async (modelToInsert) => {
     try {
-        const {name, color, brandId, categoryId} = modelToInsert;
-        
+        const {name, color, brandId, categoryId, available_for_order} = modelToInsert;
+
         const newModel = await Model.create({
             name,
             color,
             brand_id: brandId,
-            category_id: categoryId
+            category_id: categoryId,
+            available_for_order: available_for_order !== undefined ? Number(available_for_order) : 1
         })
         return newModel;
     } catch (error) {

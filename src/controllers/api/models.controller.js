@@ -3,6 +3,7 @@ import { deleteModelById, findAllModelsByCategory, findLatest, findModelById, fi
 import { findBrandById } from "../../helpers/brand.js";
 import { deleteFilesFromCloudinary, getCloudinaryUrl } from "../../helpers/cloudinary.js";
 import { insertCategoriesWithModelId } from "../../helpers/category.js";
+import { syncStockSizes } from "../../helpers/stock.js";
 
 const controller = {
     getAll: async (req, res) => {
@@ -118,7 +119,7 @@ const controller = {
     },
     create: async (req, res) => {
         try {
-            let {name, color, brandId, filesMetadata, categoryId, categories} = req.body;
+            let {name, color, brandId, filesMetadata, categoryId, categories, available_for_order, sizeIds} = req.body;
             filesMetadata = JSON.parse(filesMetadata);
             name = name.toLowerCase();
             color = color.toLowerCase();
@@ -157,7 +158,8 @@ const controller = {
                 name,
                 color,
                 brandId,
-                categoryId
+                categoryId,
+                available_for_order: available_for_order !== undefined ? Number(available_for_order) : 1
             }
             const modelInserted = await insertModelInDb(newModelToCreate);
             if(!modelInserted){
@@ -166,16 +168,23 @@ const controller = {
                     ok: false
                 })
             }
-            const categoryIds = Array.isArray(categories) ? categories : [categories];
-            const modelCategorySuccessfullyInserted = await insertCategoriesWithModelId(categoryIds, modelInserted.id);
-            if(!modelCategorySuccessfullyInserted) {
-                await deleteModelById(modelInserted.id);
-                 return res.status(500).json({
-                    msg: 'internal server error',
-                    ok: false
-                })
+            if (categories) {
+                const categoryIds = Array.isArray(categories) ? categories : [categories];
+                const modelCategorySuccessfullyInserted = await insertCategoriesWithModelId(categoryIds, modelInserted.id);
+                if(!modelCategorySuccessfullyInserted) {
+                    await deleteModelById(modelInserted.id);
+                    return res.status(500).json({
+                        msg: 'internal server error',
+                        ok: false
+                    })
+                }
             }
-            
+
+            if (sizeIds) {
+                const sizeIdsArray = Array.isArray(sizeIds) ? sizeIds : [sizeIds];
+                await syncStockSizes(modelInserted.id, sizeIdsArray);
+            }
+
             const fileKeys = await handleModelFiles(multerFiles, filesMetadata);
             if(fileKeys === undefined){
                 return res.status(500).json({

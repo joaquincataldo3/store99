@@ -7,6 +7,45 @@ document.addEventListener('DOMContentLoaded', () => {
   const brandSelect = document.getElementById('brand');
   const brandSpinner = document.getElementById('brand-spinner');
 
+  const checkEncargue = document.getElementById('check_encargue');
+  const checkStock = document.getElementById('check_stock');
+  const sizesGroup = document.getElementById('sizes-group');
+  const sizesContainer = document.getElementById('sizes-container');
+  let sizesLoaded = false;
+
+  async function loadSizes() {
+    if (sizesLoaded) return;
+    sizesLoaded = true;
+    try {
+      const res = await fetch('/api/size');
+      const { data } = await res.json();
+      sizesContainer.innerHTML = '';
+      data.forEach(size => {
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'sizeIds';
+        checkbox.value = size.id;
+        const span = document.createElement('span');
+        span.textContent = size.arg_size;
+        label.appendChild(checkbox);
+        label.appendChild(span);
+        sizesContainer.appendChild(label);
+      });
+    } catch (err) {
+      sizesContainer.innerHTML = '<p class="loading-msg">Error al cargar talles.</p>';
+    }
+  }
+
+  checkStock.addEventListener('change', () => {
+    if (checkStock.checked) {
+      sizesGroup.style.display = 'block';
+      loadSizes();
+    } else {
+      sizesGroup.style.display = 'none';
+    }
+  });
+
   // Cargar brands
   async function loadBrands() {
     brandSpinner.style.display = 'block';
@@ -96,10 +135,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const selectedCategories = [...document.querySelectorAll('input[name="categories"]:checked')];
 
-    if (selectedCategories.length === 0) {
-      alert('Debés seleccionar al menos una categoría.');
+  if (checkEncargue.checked && selectedCategories.length === 0) {
+    alert('Debés seleccionar al menos una categoría para modelos por encargue.');
+    hasErrors = true;
+  }
+
+  if (!checkEncargue.checked && !checkStock.checked) {
+    alert('Debés seleccionar al menos una disponibilidad (por encargue o en stock).');
+    hasErrors = true;
+  }
+
+  if (checkStock.checked) {
+    const selectedSizes = [...sizesContainer.querySelectorAll('input[name="sizeIds"]:checked')];
+    if (selectedSizes.length === 0) {
+      alert('Debés seleccionar al menos un talle para el stock.');
       hasErrors = true;
     }
+  }
 
   if (files.length === 0) {
     alert('Debés subir al menos una imagen.');
@@ -138,9 +190,14 @@ document.addEventListener('DOMContentLoaded', () => {
   formData.append('name', name);
   formData.append('color', color);
   formData.append('filesMetadata', JSON.stringify(uploadedFiles));
+  formData.append('available_for_order', checkEncargue.checked ? '1' : '0');
   selectedCategories.forEach(cb => {
     formData.append('categories[]', cb.value);
   });
+  if (checkStock.checked) {
+    const selectedSizes = [...sizesContainer.querySelectorAll('input[name="sizeIds"]:checked')];
+    selectedSizes.forEach(cb => formData.append('sizeIds[]', cb.value));
+  }
 
   // Agregar archivos al FormData
   for (let i = 0; i < files.length; i++) {
