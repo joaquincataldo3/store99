@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const config = {
   "development": {
-    "username": process.env.USER,
+    "username": process.env.DB_USER,
     "password": process.env.PASSWORD || null,
     "database": process.env.DATABASE,
     "host": '127.0.0.1',
@@ -17,7 +17,7 @@ const config = {
     "dialect": "mysql"
   },
   "production": {
-    "username": process.env.USER,
+    "username": process.env.DB_USER,
     "password": process.env.PASSWORD || null,
     "database": process.env.DATABASE,
     "host": process.env.HOST,
