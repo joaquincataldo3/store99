@@ -22,8 +22,6 @@ const MemoryStore = memorystore(session);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use((req, res, next) => { console.log(`[TOP] ${req.method} ${req.url}`); next(); });
-
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "./pages"));
 app.use(express.static("./public"));
@@ -56,8 +54,6 @@ app.use(cookieParser());
 
 // Mehtod-override --> Para usar put y delete (?_method=...)
 app.use(methodOverride("_method"));
-
-app.use((req, res, next) => { console.log(`[REQ] ${req.method} ${req.url}`); next(); });
 
 app.use('/', viewsRouter)
 app.use('/api/user', usersRouter)
