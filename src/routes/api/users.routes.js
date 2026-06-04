@@ -5,6 +5,6 @@ import { checkUserAuth } from '../../middlewares/auth.middleware.js';
 const router = express.Router();
 
 router.post('/sign-in', usersController.signIn);
-router.post('/register', registerValidations, usersController.register);
+router.post('/register', checkUserAuth, registerValidations, usersController.register);
 
 export default router;

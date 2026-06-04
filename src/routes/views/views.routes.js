@@ -11,7 +11,7 @@ router.get('/forma-comprar', viewsController.formaComprar);
 router.get('/quienes-somos', viewsController.quienesSomos);
 router.get('/zapatillas-stock',viewsController.modelsStock);
 
-router.get('/registro', viewsController.register);
+router.get('/registro', checkUserAuth, viewsController.register);
 router.get('/crear-modelo', checkUserAuth, viewsController.createModel);
 router.get('/editar-stock', checkUserAuth, viewsController.editStock);
 router.get('/subir-forma-comprar', checkUserAuth, viewsController.uploadFormaComprar);
