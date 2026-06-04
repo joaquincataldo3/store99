@@ -12,7 +12,14 @@ export default (sequelize, dataTypes) => {
         regular_filename: { type: dataTypes.STRING(255)},
         thumb_filename: { type: dataTypes.STRING(255)},
         model_id: { type: dataTypes.INTEGER },
-        main_file: { type: dataTypes.INTEGER }
+        main_file: {
+            type: dataTypes.INTEGER,
+            get() {
+                const val = this.getDataValue('main_file');
+                if (Buffer.isBuffer(val)) return val[0];
+                return val;
+            }
+        }
     }
 
     let config = {
