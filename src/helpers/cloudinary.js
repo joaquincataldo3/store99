@@ -33,7 +33,9 @@ export const deleteFilesFromCloudinary = async (files) => {
 };
 
 export const getCloudinaryUrl = (publicId, { thumb = false } = {}) => {
-  return cloudinary.url(publicId, {
+  let normalizedId = publicId.replace(/\.[^/.]+$/, '');
+  if (!normalizedId.startsWith('store99/')) normalizedId = `store99/${normalizedId}`;
+  return cloudinary.url(normalizedId, {
     width: thumb ? 600 : 1200,
     crop: 'scale',
     format: 'webp',
