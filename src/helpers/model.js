@@ -69,7 +69,7 @@ export const findModelById = async (shoeId) => {
 }
 
 
-export const insertModelInDb = async (modelToInsert) => {
+export const insertModelInDb = async (modelToInsert, options = {}) => {
     try {
         const {name, color, brandId, categoryId, available_for_order} = modelToInsert;
 
@@ -79,14 +79,14 @@ export const insertModelInDb = async (modelToInsert) => {
             brand_id: brandId,
             category_id: categoryId,
             available_for_order: available_for_order !== undefined ? Number(available_for_order) : 1
-        })
+        }, options)
         return newModel;
     } catch (error) {
         console.log('error inserting model in db');
         console.log(error);
         return undefined;
     }
-} 
+}
 
 export const deleteModelById = async (shoeId) => {
     try {

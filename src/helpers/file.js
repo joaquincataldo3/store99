@@ -34,7 +34,7 @@ export const handleModelFiles = async (files, frontendMetadata = []) => {
   }
 };
 
-export const insertFilesInDb = async (files, modelId) => {
+export const insertFilesInDb = async (files, modelId, options = {}) => {
   try {
     for (let i = 0; i < files.length; i++) {
       const { regular_filename, thumb_filename, main_file } = files[i];
@@ -44,7 +44,7 @@ export const insertFilesInDb = async (files, modelId) => {
         thumb_filename: thumb_filename || null,
         main_file,
         model_id: modelId
-      });
+      }, options);
     }
     return true;
   } catch (error) {

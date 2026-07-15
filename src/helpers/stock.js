@@ -40,10 +40,11 @@ export const findAll = async () => {
     });
 }
 
-export const syncStockSizes = async (modelId, newSizeIds) => {
+export const syncStockSizes = async (modelId, newSizeIds, options = {}) => {
     const currentStock = await Stock.findAll({
         where: { model_id: modelId },
         raw: true,
+        transaction: options.transaction,
     });
 
     const currentSizeIds = currentStock.map(s => s.size_id);
@@ -52,14 +53,15 @@ export const syncStockSizes = async (modelId, newSizeIds) => {
     const toDelete = currentSizeIds.filter(id => !newSizeIds.includes(id));
 
     const insertPromises = toInsert.map(sizeId =>
-        Stock.create({ model_id: modelId, size_id: sizeId })
+        Stock.create({ model_id: modelId, size_id: sizeId }, options)
     );
 
     const deletePromise = Stock.destroy({
         where: {
             model_id: modelId,
             size_id: toDelete
-        }
+        },
+        transaction: options.transaction,
     });
 
     await Promise.all([...insertPromises, deletePromise]);

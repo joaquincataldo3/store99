@@ -4,6 +4,7 @@ import { findBrandById } from "../../helpers/brand.js";
 import { deleteFilesFromCloudinary, getCloudinaryUrl } from "../../helpers/cloudinary.js";
 import { insertCategoriesWithModelId } from "../../helpers/category.js";
 import { syncStockSizes } from "../../helpers/stock.js";
+import db from "../../database/models/index.js";
 
 const controller = {
     getAll: async (req, res) => {
@@ -147,44 +148,16 @@ const controller = {
                     ok: false
                 })
             }
-            const brandExists = findBrandById(brandId);
-            if(!brandExists) { 
+            const brandExists = await findBrandById(brandId);
+            if(!brandExists) {
                 return res.status(400).json({
                     msg: "brand doesn't exist",
                     ok: false
                 })
             }
-            const newModelToCreate = {
-                name,
-                color,
-                brandId,
-                categoryId,
-                available_for_order: available_for_order !== undefined ? Number(available_for_order) : 1
-            }
-            const modelInserted = await insertModelInDb(newModelToCreate);
-            if(!modelInserted){
-                return res.status(500).json({
-                    msg: 'internal server error',
-                    ok: false
-                })
-            }
-            if (categories) {
-                const categoryIds = Array.isArray(categories) ? categories : [categories];
-                const modelCategorySuccessfullyInserted = await insertCategoriesWithModelId(categoryIds, modelInserted.id);
-                if(!modelCategorySuccessfullyInserted) {
-                    await deleteModelById(modelInserted.id);
-                    return res.status(500).json({
-                        msg: 'internal server error',
-                        ok: false
-                    })
-                }
-            }
 
-            if (sizeIds) {
-                const sizeIdsArray = Array.isArray(sizeIds) ? sizeIds : [sizeIds];
-                await syncStockSizes(modelInserted.id, sizeIdsArray);
-            }
-
+            // Subir a Cloudinary antes de escribir nada en la DB: si esto falla
+            // no queda ningún registro huérfano (modelo sin imágenes).
             const fileKeys = await handleModelFiles(multerFiles, filesMetadata);
             if(fileKeys === undefined){
                 return res.status(500).json({
@@ -192,17 +165,57 @@ const controller = {
                     ok: false
                 })
             }
-            const areFilesInsertedInDb = await insertFilesInDb(fileKeys, modelInserted.id)
-            if(!areFilesInsertedInDb){
+
+            const transaction = await db.sequelize.transaction();
+            try {
+                const newModelToCreate = {
+                    name,
+                    color,
+                    brandId,
+                    categoryId,
+                    available_for_order: available_for_order !== undefined ? Number(available_for_order) : 1
+                }
+                const modelInserted = await insertModelInDb(newModelToCreate, { transaction });
+                if(!modelInserted){
+                    throw new Error('failed to insert model');
+                }
+
+                if (categories) {
+                    const categoryIds = Array.isArray(categories) ? categories : [categories];
+                    const modelCategorySuccessfullyInserted = await insertCategoriesWithModelId(categoryIds, modelInserted.id, { transaction });
+                    if(!modelCategorySuccessfullyInserted) {
+                        throw new Error('failed to insert categories');
+                    }
+                }
+
+                if (sizeIds) {
+                    const sizeIdsArray = Array.isArray(sizeIds) ? sizeIds : [sizeIds];
+                    await syncStockSizes(modelInserted.id, sizeIdsArray, { transaction });
+                }
+
+                const areFilesInsertedInDb = await insertFilesInDb(fileKeys, modelInserted.id, { transaction });
+                if(!areFilesInsertedInDb){
+                    throw new Error('failed to insert files');
+                }
+
+                await transaction.commit();
+
+                return res.status(201).json({
+                    ok: true,
+                    msg: 'shoe created successfully'
+                })
+            } catch (transactionError) {
+                await transaction.rollback();
+                console.log('error creating model, rolled back');
+                console.log(transactionError);
+                // Las imágenes ya se subieron a Cloudinary antes de la transacción: limpiarlas
+                // para no dejar archivos huérfanos allá tampoco.
+                await deleteFilesFromCloudinary(fileKeys);
                 return res.status(500).json({
                     msg: 'internal server error',
                     ok: false
                 })
             }
-            return res.status(201).json({
-                ok: true,
-                msg: 'shoe created successfully'
-            })
         } catch (error) {
             console.log('error creating model');
             console.log(error);
