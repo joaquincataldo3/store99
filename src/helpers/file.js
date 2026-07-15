@@ -5,19 +5,22 @@ const { File } = db;
 
 const allowedFormats = ['jpeg', 'png', 'webp', 'avif', 'heif'];
 
-export const handleModelFiles = async (files, frontendMetadata = []) => {
+const slugify = (str) => str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+// El public_id se arma solo con datos ya sanitizados (name/color/índice),
+// nunca con el nombre del archivo original: evita romperse con nombres de
+// producto que traen puntos, "+", paréntesis, etc.
+export const handleModelFiles = async (files, frontendMetadata = [], { name, color }) => {
   try {
     const keys = [];
+    const baseSlug = `${slugify(name)}-${slugify(color)}`;
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const meta = frontendMetadata[i];
 
-      // Strip extension — Cloudinary uses public_id without extension
-      const publicId = meta.filename.replace(/\.[^/.]+$/, '');
+      const publicId = `model/${baseSlug}-${i + 1}`;
       const storedPublicId = await uploadFile(file.buffer, publicId);
-      console.log('uploaded')
-      console.log(storedPublicId)
 
       keys.push({
         regular_filename: storedPublicId,

@@ -185,15 +185,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (hasErrors) return;
 
-  // Construcción del array con nombres y main_file
-  const uploadedFiles = [...files].map((file, index) => {
-    const ext = file.name.split('.').pop().toLowerCase();
-    const baseName = file.name.replace(/\.[^/.]+$/, '');
-    return {
-      filename: `model/${Date.now()}-${baseName}.${ext}`,
-      main_file: index === mainFileIndex
-    };
-  });
+  // El backend arma el nombre del archivo a partir de name/color/índice,
+  // acá solo hace falta indicar cuál es la imagen principal.
+  const uploadedFiles = [...files].map((file, index) => ({
+    main_file: index === mainFileIndex
+  }));
 
   // Crear FormData
   const formData = new FormData();

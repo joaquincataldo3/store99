@@ -158,7 +158,7 @@ const controller = {
 
             // Subir a Cloudinary antes de escribir nada en la DB: si esto falla
             // no queda ningún registro huérfano (modelo sin imágenes).
-            const fileKeys = await handleModelFiles(multerFiles, filesMetadata);
+            const fileKeys = await handleModelFiles(multerFiles, filesMetadata, { name, color });
             if(fileKeys === undefined){
                 return res.status(500).json({
                     msg: 'internal server error',

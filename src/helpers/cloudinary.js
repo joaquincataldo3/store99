@@ -32,8 +32,10 @@ export const deleteFilesFromCloudinary = async (files) => {
   return true;
 };
 
+const KNOWN_IMAGE_EXTENSIONS = /\.(jpe?g|png|webp|avif|heif|gif)$/i;
+
 export const getCloudinaryUrl = (publicId, { thumb = false } = {}) => {
-  let normalizedId = publicId.replace(/\.[^/.]+$/, '');
+  let normalizedId = publicId.replace(KNOWN_IMAGE_EXTENSIONS, '');
   if (!normalizedId.startsWith('store99/')) normalizedId = `store99/${normalizedId}`;
   return cloudinary.url(normalizedId, {
     width: thumb ? 600 : 1200,
