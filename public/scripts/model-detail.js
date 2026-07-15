@@ -229,14 +229,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   confirmBtn?.addEventListener('click', async () => {
     try {
-      const response = await fetch('/ruta-para-eliminar', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ modelId: '<%= model.id %>' })
+      const modelId = deleteBtn.dataset.modelId;
+      const response = await fetch(`/api/model/${modelId}`, {
+        method: 'DELETE'
       });
       if (response.ok) {
         alert('Eliminado correctamente');
-        window.location.href = '/lista-de-modelos';
+        window.location.href = '/zapatillas-encargue';
       } else {
         alert('Error al eliminar');
       }
