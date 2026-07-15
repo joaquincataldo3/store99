@@ -58,6 +58,24 @@ small {
   background-color: #0056b3;
 }
 
+.submit-button:disabled {
+  background-color: #7fb1e0;
+  cursor: not-allowed;
+}
+
+.submit-button-container {
+  position: relative;
+}
+
+.spinner-inline {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-color: #cfe2ff;
+  border-top-color: white;
+}
+
 /* Spinner */
 .brand-loader-container {
   position: relative;

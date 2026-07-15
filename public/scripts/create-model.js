@@ -13,6 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const sizesContainer = document.getElementById('sizes-container');
   let sizesLoaded = false;
 
+  const submitButton = document.getElementById('submit-button');
+  const submitSpinner = document.getElementById('submit-spinner');
+  let isSubmitting = false;
+
+  const errorMessagesByStatus = {
+    400: 'Revisá los datos del formulario: hay un campo inválido.',
+    409: 'Ya existe un modelo con ese nombre y color.',
+  };
+
   async function loadSizes() {
     if (sizesLoaded) return;
     sizesLoaded = true;
@@ -107,6 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Validación y envío
   form.addEventListener('submit', async (e) => {
    e.preventDefault();
+
+  if (isSubmitting) return;
 
   // Limpiar errores visuales
   document.querySelectorAll('input, select').forEach(el => el.classList.remove('error'));
@@ -204,6 +215,10 @@ document.addEventListener('DOMContentLoaded', () => {
     formData.append('images', files[i]);
   }
   
+  isSubmitting = true;
+  submitButton.disabled = true;
+  submitSpinner.style.display = 'block';
+
   try {
     const res = await fetch('/api/model', {
       method: 'POST',
@@ -211,15 +226,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const result = await res.json();
-    if (!res.ok) throw new Error(result.msg || 'Error al crear el modelo');
+
+    if (!res.ok) {
+      const friendlyMsg = errorMessagesByStatus[res.status] || result.msg || 'Ocurrió un error al crear el modelo. Probá de nuevo.';
+      alert(friendlyMsg);
+      return;
+    }
 
     alert('Modelo creado con éxito.');
     window.location.reload();
+    return;
   } catch (err) {
     console.error(err);
-    alert('Ocurrió un error al enviar el formulario.');
+    alert('No se pudo conectar con el servidor. Revisá tu conexión y probá de nuevo.');
+  } finally {
+    isSubmitting = false;
+    submitButton.disabled = false;
+    submitSpinner.style.display = 'none';
   }
-    
+
   });
 
   const categoriesContainer = document.getElementById('categories-container');
