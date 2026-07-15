@@ -3,12 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileMenu = document.getElementById('mobileMenu');
   const closeBtn = document.getElementById('closeBtn');
 
-  burger.addEventListener('click', () => {
-    mobileMenu.classList.add('active');
+  burger?.addEventListener('click', () => {
+    mobileMenu?.classList.add('active');
   });
 
-  closeBtn.addEventListener('click', () => {
-    mobileMenu.classList.remove('active');
+  closeBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.remove('active');
   });
 
   
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const submenu = document.querySelector('.has-submenu');
-    const arrow = submenu.querySelector('.bx-caret-right');
+    const arrow = submenu?.querySelector('.bx-caret-right');
 
     if(arrow){
       arrow.addEventListener('click', (e) => {

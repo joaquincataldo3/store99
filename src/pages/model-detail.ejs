@@ -76,7 +76,7 @@
     <% if(locals.isLogged) {  %>
        <section class="actions-buttons">
             <a class="action-btn" href="/editar-stock?modelId=<%= model.id %>">Actualizar stock</a>
-            <button class="action-btn delete-btn" data-model-id="<%= model.id %>">Eliminar</button>
+            <button class="action-btn delete-btn" data-model-id="<%= model.id %>" data-category-id="<%= model.categories && model.categories[0] ? model.categories[0].id : '1' %>">Eliminar</button>
         </section>
     <div id="deleteModal" class="modal-overlay">
       <div class="modal-content">

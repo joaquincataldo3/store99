@@ -235,7 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       if (response.ok) {
         alert('Eliminado correctamente');
-        window.location.href = '/zapatillas-encargue';
+        const categoryId = deleteBtn.dataset.categoryId || '1';
+        window.location.href = `/zapatillas-encargue?categoryId=${categoryId}`;
       } else {
         alert('Error al eliminar');
       }
