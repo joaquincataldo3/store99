@@ -1,5 +1,5 @@
 import db from "../database/models/index.js";
-const { Stock } = db;
+const { Stock, Sequelize } = db;
 
 export const findStockByModel = async (modelId) => {
     return await Stock.findAll({
@@ -37,7 +37,7 @@ export const findAll = async () => {
             ]
         }
         ],
-        order: [[{ association: 'size' }, 'us_size', 'DESC']]
+        order: [[Sequelize.col('size.us_size'), 'DESC']]
     });
 }
 
