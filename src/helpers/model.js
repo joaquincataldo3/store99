@@ -1,5 +1,5 @@
 import db from "../database/models/index.js";
-const { Model, ModelCategory, Brand, File, Category} = db;
+const { Model, ModelCategory, Brand, File, Category, Stock} = db;
 
 export const findAllModelsByCategory = async (categoryId) => {
   return await ModelCategory.findAll({
@@ -90,6 +90,16 @@ export const insertModelInDb = async (modelToInsert, options = {}) => {
 
 export const deleteModelById = async (shoeId) => {
     try {
+        await Stock.destroy({
+            where: {
+                model_id: shoeId
+            }
+        })
+        await ModelCategory.destroy({
+            where: {
+                model_id: shoeId
+            }
+        })
         await Model.destroy({
             where: {
                 id: shoeId

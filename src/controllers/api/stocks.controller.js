@@ -29,12 +29,13 @@ const controller = {
     },
     getAllStocks: async (req, res) => {
         try {
-            const stock = await findAll(); 
+            const stock = await findAll();
 
-          
+            const validStock = stock.filter(entry => entry.model !== null);
+
             const modelMap = new Map();
 
-            stock.forEach(entry => {
+            validStock.forEach(entry => {
                 if (!modelMap.has(entry.model.id)) {
                     modelMap.set(entry.model.id, entry.model);
                 }
@@ -68,7 +69,7 @@ const controller = {
                 })
             );
 
-            const finalStock = stock.map(entry => ({
+            const finalStock = validStock.map(entry => ({
                 id: entry.id,
                 size: entry.size,
                 model: enrichedModelsMap.get(entry.model.id)

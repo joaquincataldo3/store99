@@ -26,7 +26,7 @@ export const findAll = async () => {
     return await Stock.findAll({
         include: [
         {
-            association: 'size' 
+            association: 'size'
         },
         {
             association: 'model',
@@ -36,7 +36,8 @@ export const findAll = async () => {
             { association: 'brand' }
             ]
         }
-        ]
+        ],
+        order: [[{ association: 'size' }, 'us_size', 'DESC']]
     });
 }
 
