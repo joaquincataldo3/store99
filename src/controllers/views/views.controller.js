@@ -45,6 +45,8 @@ const controller = {
                     };
                 })
             );
+            filesWithUrls.sort((a, b) => (b.main_file || 0) - (a.main_file || 0));
+
             const isLogged = checkIfLogged(req, res);
             return res.render('model-detail', {
                 model: {
